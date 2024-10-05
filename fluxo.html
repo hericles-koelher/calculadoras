@@ -46,9 +46,23 @@
         .section h3 {
             margin-bottom: 10px;
         }
+        .switch-calculator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .switch-calculator button {
+            width: 48%;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Botões para trocar de calculadora -->
+    <div class="switch-calculator">
+        <button onclick="window.location.href='index.html'">Calculadora de Overhang</button>
+        <button onclick="window.location.href='fluxo.html'">Calculadora de Fluxo</button>
+    </div>
 
     <div class="container">
         <h1>Calculadora de Fluxo</h1>
@@ -107,7 +121,6 @@
 
     <script>
         function calcularFluxo() {
-            // Obter todas as medições
             const medidas = [];
             for (let i = 1; i <= 4; i++) {
                 for (let j = 1; j <= 5; j++) {
@@ -118,17 +131,14 @@
                 }
             }
 
-            // Verificar se todas as 20 medições foram preenchidas
             if (medidas.length !== 20) {
                 document.getElementById('resultado').textContent = 'Por favor, preencha todas as 20 medições.';
                 return;
             }
 
-            // Calcular a média das medidas
             const somaMedidas = medidas.reduce((a, b) => a + b, 0);
             const mediaMedidas = somaMedidas / medidas.length;
 
-            // Obter a largura de extrusão do fatiador e o fluxo configurado
             const larguraFatiador = parseFloat(document.getElementById('larguraFatiador').value);
             const fluxoFatiador = parseFloat(document.getElementById('fluxoFatiador').value);
 
@@ -137,10 +147,7 @@
                 return;
             }
 
-            // Calcular o novo fluxo com a regra de três
             const novoFluxo = (larguraFatiador / mediaMedidas) * fluxoFatiador;
-
-            // Exibir o resultado
             document.getElementById('resultado').textContent = `O novo fluxo deve ser ajustado para: ${novoFluxo.toFixed(2)}%`;
         }
     </script>
