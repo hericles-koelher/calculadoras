@@ -10,7 +10,7 @@
             margin: 20px;
         }
         .container {
-            max-width: 400px;
+            max-width: 500px;
             margin: auto;
             padding: 20px;
             border: 1px solid #ccc;
@@ -40,9 +40,23 @@
             font-size: 18px;
             font-weight: bold;
         }
+        .switch-calculator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .switch-calculator button {
+            width: 48%;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Botões para trocar de calculadora -->
+    <div class="switch-calculator">
+        <button onclick="window.location.href='fluxo.html'">Calculadora de Fluxo</button>
+        <button onclick="window.location.href='index.html'">Calculadora de Overhang</button>
+    </div>
 
     <div class="container">
         <h1>Calculadora de Overhang Máximo</h1>
@@ -68,7 +82,6 @@
                 return;
             }
 
-            // Fórmula: Ângulo de Overhang = 90 - arctan(Altura da Camada / (Largura da Extrusão / 2))
             const larguraExtrusao = bico;
             const anguloRad = Math.atan(alturaCamada / (larguraExtrusao / 2));
             const anguloOverhang = 90 - (anguloRad * 180 / Math.PI);
