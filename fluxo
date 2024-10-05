@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Fluxo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Calculadora de Fluxo</h1>
+        <p>Insira as medições de cada parede do cubo, a largura de extrusão e o fluxo configurado no fatiador:</p>
+
+        <div class="section">
+            <h3>Parede 1</h3>
+            <input type="number" id="parede1_1" step="0.01" placeholder="Medida 1">
+            <input type="number" id="parede1_2" step="0.01" placeholder="Medida 2">
+            <input type="number" id="parede1_3" step="0.01" placeholder="Medida 3">
+            <input type="number" id="parede1_4" step="0.01" placeholder="Medida 4">
+            <input type="number" id="parede1_5" step="0.01" placeholder="Medida 5">
+        </div>
+
+        <div class="section">
+            <h3>Parede 2</h3>
+            <input type="number" id="parede2_1" step="0.01" placeholder="Medida 1">
+            <input type="number" id="parede2_2" step="0.01" placeholder="Medida 2">
+            <input type="number" id="parede2_3" step="0.01" placeholder="Medida 3">
+            <input type="number" id="parede2_4" step="0.01" placeholder="Medida 4">
+            <input type="number" id="parede2_5" step="0.01" placeholder="Medida 5">
+        </div>
+
+        <div class="section">
+            <h3>Parede 3</h3>
+            <input type="number" id="parede3_1" step="0.01" placeholder="Medida 1">
+            <input type="number" id="parede3_2" step="0.01" placeholder="Medida 2">
+            <input type="number" id="parede3_3" step="0.01" placeholder="Medida 3">
+            <input type="number" id="parede3_4" step="0.01" placeholder="Medida 4">
+            <input type="number" id="parede3_5" step="0.01" placeholder="Medida 5">
+        </div>
+
+        <div class="section">
+            <h3>Parede 4</h3>
+            <input type="number" id="parede4_1" step="0.01" placeholder="Medida 1">
+            <input type="number" id="parede4_2" step="0.01" placeholder="Medida 2">
+            <input type="number" id="parede4_3" step="0.01" placeholder="Medida 3">
+            <input type="number" id="parede4_4" step="0.01" placeholder="Medida 4">
+            <input type="number" id="parede4_5" step="0.01" placeholder="Medida 5">
+        </div>
+
+        <div class="section">
+            <h3>Largura de Extrusão Configurada no Fatiador (mm)</h3>
+            <input type="number" id="larguraFatiador" step="0.01" placeholder="Ex: 0.4">
+        </div>
+
+        <div class="section">
+            <h3>Fluxo Configurado no Fatiador (%)</h3>
+            <input type="number" id="fluxoFatiador" step="0.01" placeholder="Ex: 100">
+        </div>
+
+        <button onclick="calcularFluxo()">Calcular Novo Fluxo</button>
+
+        <div class="result" id="resultado"></div>
+    </div>
+
+    <script>
+        function calcularFluxo() {
+            // Obter todas as medições
+            const medidas = [];
+            for (let i = 1; i <= 4; i++) {
+                for (let j = 1; j <= 5; j++) {
+                    const medida = parseFloat(document.getElementById(`parede${i}_${j}`).value);
+                    if (!isNaN(medida)) {
+                        medidas.push(medida);
+                    }
+                }
+            }
+
+            // Verificar se todas as 20 medições foram preenchidas
+            if (medidas.length !== 20) {
+                document.getElementById('resultado').textContent = 'Por favor, preencha todas as 20 medições.';
+                return;
+            }
+
+            // Calcular a média das medidas
+            const somaMedidas = medidas.reduce((a, b) => a + b, 0);
+            const mediaMedidas = somaMedidas / medidas.length;
+
+            // Obter a largura de extrusão do fatiador e o fluxo configurado
+            const larguraFatiador = parseFloat(document.getElementById('larguraFatiador').value);
+            const fluxoFatiador = parseFloat(document.getElementById('fluxoFatiador').value);
+
+            if (isNaN(larguraFatiador) || isNaN(fluxoFatiador)) {
+                document.getElementById('resultado').textContent = 'Por favor, preencha a largura de extrusão e o fluxo do fatiador.';
+                return;
+            }
+
+            // Calcular o novo fluxo com a regra de três
+            const novoFluxo = (larguraFatiador / mediaMedidas) * fluxoFatiador;
+
+            // Exibir o resultado
+            document.getElementById('resultado').textContent = `O novo fluxo deve ser ajustado para: ${novoFluxo.toFixed(2)}%`;
+        }
+    </script>
+
+</body>
+</html>
