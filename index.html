@@ -42,11 +42,27 @@
         }
         .switch-calculator {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 10px;
             margin-bottom: 20px;
+            position: fixed;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .switch-calculator button {
-            width: 48%;
+            width: 150px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .switch-calculator button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
@@ -54,11 +70,12 @@
 
     <!-- Botões para trocar de calculadora -->
     <div class="switch-calculator">
-        <button onclick="window.location.href='fluxo.html'">Calculadora de Fluxo</button>
         <button onclick="window.location.href='index.html'">Calculadora de Overhang</button>
+        <button onclick="window.location.href='fluxo.html'">Calculadora de Fluxo</button>
+        <button onclick="window.location.href='vv.html'">Calculadora Volumétrica</button>
     </div>
 
-    <div class="container">
+    <div class="container" style="margin-top: 80px;"> <!-- Ajuste para compensar os botões fixos -->
         <h1>Calculadora de Overhang Máximo</h1>
         <p>Insira os valores para calcular o ângulo máximo de overhang sem suporte:</p>
         <label for="bico">Diâmetro do Bico (mm):</label>
