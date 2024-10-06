@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Velocidades P3P - Volumétrica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            position: fixed;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            width: 150px;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .container {
+            max-width: 400px;
+            margin: 60px auto 20px auto; /* Ajuste para compensar os botões fixos */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 5px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .input-group label {
+            margin-left: 10px;
+            font-weight: bold;
+            width: 50%;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .explanation {
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .alert {
+            margin-top: 10px;
+        }
+        .alert-vermelho {
+            color: red;
+            font-weight: bold;
+        }
+        .alert-laranja {
+            color: orange;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botões para alternar entre as calculadoras -->
+    <div class="button-container">
+        <button onclick="window.location.href='index.html'">Calculadora Overhang</button>
+        <button onclick="window.location.href='fluxo.html'">Calculadora de Fluxo</button>
+        <button onclick="window.location.href='vv.html'">Calculadora Volumétrica</button>
+    </div>
+
+    <div class="container">
+        <h1>Calculadora de Velocidades P3P</h1>
+
+        <p>O que você quer calcular?</p>
+
+        <div class="radio-container">
+            <label><input type="radio" name="calcularOpcao" value="velocidadeVolumetrica" onclick="atualizarInterface()"> Velocidade Volumétrica</label>
+            <label><input type="radio" name="calcularOpcao" value="velocidadeImpressao" onclick="atualizarInterface()"> Velocidade de Impressão</label>
+        </div>
+
+        <!-- Parâmetros de Impressão -->
+        <div class="input-group">
+            <input type="number" id="alturaCamada" step="0.02" placeholder="Ex: 0.2">
+            <label for="alturaCamada">Altura da Camada (mm)</label>
+        </div>
+
+        <div class="input-group">
+            <input type="number" id="diametroBico" step="0.1" placeholder="Ex: 0.4">
+            <label for="diametroBico">Diâmetro do Bico (mm)</label>
+        </div>
+
+        <!-- Terceira variável (Velocidade de Impressão ou Velocidade Volumétrica) -->
+        <div class="section" id="variavelAdicional"></div>
+
+        <button onclick="calcular()">Calcular</button>
+
+        <div class="result" id="resultado"></div>
+        <div class="explanation" id="explicacao"></div>
+        <div class="alert" id="mensagemAlerta"></div>
+    </div>
+
+    <script>
+        function atualizarInterface() {
+            const calcularOpcao = document.querySelector('input[name="calcularOpcao"]:checked').value;
+            const variavelAdicional = document.getElementById('variavelAdicional');
+            
+            // Limpa o conteúdo atual da terceira variável
+            variavelAdicional.innerHTML = '';
+
+            if (calcularOpcao === 'velocidadeVolumetrica') {
+                // Se o usuário quer calcular a Velocidade Volumétrica, insere o campo para Velocidade de Impressão
+                variavelAdicional.innerHTML = `
+                    <div class="input-group">
+                        <input type="number" id="velocidadeImpressao" step="5" placeholder="Ex: 60">
+                        <label for="velocidadeImpressao">Velocidade de Impressão (mm/s)</label>
+                    </div>
+                `;
+            } else {
+                // Se o usuário quer calcular a Velocidade de Impressão, insere o campo para Velocidade Volumétrica
+                variavelAdicional.innerHTML = `
+                    <div class="input-group">
+                        <input type="number" id="velocidadeVolumetrica" step="1" placeholder="Ex: 10">
+                        <label for="velocidadeVolumetrica">Velocidade Volumétrica (mm³/s)</label>
+                    </div>
+                `;
+            }
+        }
+
+        function calcular() {
+            const alturaCamada = parseFloat(document.getElementById('alturaCamada').value);
+            const diametroBico = parseFloat(document.getElementById('diametroBico').value);
+            const calcularOpcao = document.querySelector('input[name="calcularOpcao"]:checked').value;
+            let resultado;
+
+            // Limpar alertas, resultados e explicações anteriores
+            document.getElementById('mensagemAlerta').innerHTML = '';
+            document.getElementById('resultado').textContent = '';
+            document.getElementById('explicacao').textContent = '';
+
+            // Verificar se a altura da camada está fora da proporção 20% a 80% do diâmetro do bico
+            const minAltura = diametroBico * 0.2;
+            const maxAltura = diametroBico * 0.8;
+            if (!isNaN(alturaCamada) && !isNaN(diametroBico)) {
+                if (alturaCamada < minAltura || alturaCamada > maxAltura) {
+                    document.getElementById('mensagemAlerta').innerHTML += `<p class="alert-vermelho">Alerta: A altura da camada está fora da proporção (20% a 80% do diâmetro do bico).</p>`;
+                }
+            }
+
+            // Verificar se altura de camada e diâmetro do bico estão preenchidos
+            if (isNaN(alturaCamada)) {
+                document.getElementById('mensagemAlerta').innerHTML += `<p class="alert-laranja">Falta preencher a Altura da Camada!</p>`;
+            }
+            if (isNaN(diametroBico)) {
+                document.getElementById('mensagemAlerta').innerHTML += `<p class="alert-laranja">Falta preencher o Diâmetro do Bico!</p>`;
+            }
+
+            // Checar se a terceira variável foi preenchida
+            if (calcularOpcao === 'velocidadeVolumetrica') {
+                const velocidadeImpressao = parseFloat(document.getElementById('velocidadeImpressao').value);
+                if (isNaN(velocidadeImpressao)) {
+                    document.getElementById('mensagemAlerta').innerHTML += `<p class="alert-laranja">Falta preencher a Velocidade de Impressão!</p>`;
+                    return;
+                }
+                resultado = alturaCamada * diametroBico * velocidadeImpressao;
+                document.getElementById('resultado').textContent = `A Velocidade Volumétrica é: ${resultado.toFixed(2)} mm³/s`;
+                document.getElementById('explicacao').textContent = `Para você imprimir na velocidade ${velocidadeImpressao} mm/s, você precisa de um filamento com vazão volumétrica de ${resultado.toFixed(2)} mm³/s.`;
+            } else {
+                const velocidadeVolumetrica = parseFloat(document.getElementById('velocidadeVolumetrica').value);
+                if (isNaN(velocidadeVolumetrica)) {
+                    document.getElementById('mensagemAlerta').innerHTML += `<p class="alert-laranja">Falta preencher a Velocidade Volumétrica!</p>`;
+                    return;
+                }
+                resultado = velocidadeVolumetrica / (alturaCamada * diametroBico);
+                document.getElementById('resultado').textContent = `A Velocidade de Impressão é: ${resultado.toFixed(2)} mm/s`;
+                document.getElementById('explicacao').textContent = `Para imprimir com a vazão volumétrica de ${velocidadeVolumetrica.toFixed(2)} mm³/s, você precisa atingir a velocidade de ${resultado.toFixed(2)} mm/s.`;
+            }
+        }
+    </script>
+
+</body>
+</html>
