@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de Ângulo P.B.C</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+      input[type="number"],
+      select {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      .result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .software-options,
+      .bico-options {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 20px 0;
+      }
+      .software-options img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 5px;
+      }
+      .error,
+      .suggestion {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+      .error {
+        color: red;
+      }
+      .suggestion {
+        color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Calculadora de Ângulo P.B.C</h1>
+      <p>
+        Digite o ângulo desejado, selecione o software e o diâmetro do bico:
+      </p>
+
+      <label for="angle">Ângulo (°):</label>
+      <input
+        type="number"
+        id="angle"
+        step="0.1"
+        min="1"
+        max="89"
+        placeholder="Ex: 39"
+      />
+
+      <div class="software-options">
+        <label>
+          <img src="../../assets/orcaslicer-logo.png" alt="OrcaSlicer" />
+          <div>
+            <input type="radio" name="software" value="orca" checked />
+            OrcaSlicer
+          </div>
+        </label>
+        <label>
+          <img
+            src="../../assets/ultimaker_cura_macos_bigsur_icon_189596.webp"
+            alt="Ultimaker Cura"
+          />
+          <div>
+            <input type="radio" name="software" value="cura" /> Ultimaker Cura
+          </div>
+        </label>
+      </div>
+
+      <div class="nozzle-options">
+        <label
+          ><input type="radio" name="nozzle" value="0.2" checked /> 0.2
+          mm</label
+        >
+        <label><input type="radio" name="nozzle" value="0.4" /> 0.4 mm</label>
+        <label><input type="radio" name="nozzle" value="0.6" /> 0.6 mm</label>
+        <label><input type="radio" name="nozzle" value="0.8" /> 0.8 mm</label>
+        <label><input type="radio" name="nozzle" value="1.0" /> 1.0 mm</label>
+      </div>
+
+      <button onclick="calculatePBC()">Calcular</button>
+
+      <div class="result" id="result"></div>
+      <div class="error" id="errorMessage"></div>
+      <div class="suggestion" id="suggestionMessage"></div>
+      <div class="suggestion" id="suggestionText"></div>
+      <div class="suggestion" id="suggestionText"></div>
+    </div>
+    <script src="../js/functions.js"></script>
+  </body>
+</html>

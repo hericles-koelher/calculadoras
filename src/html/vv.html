@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora Volumétrica</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        position: fixed;
+        top: 10px;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        padding: 10px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      button {
+        width: 150px;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+      .container {
+        max-width: 400px;
+        margin: 60px auto 20px auto; /* Ajuste para compensar os botões fixos */
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 5px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .input-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .input-group label {
+        margin-left: 10px;
+        font-weight: bold;
+        width: 50%;
+      }
+      .result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .explanation {
+        font-size: 14px;
+        margin-top: 5px;
+      }
+      .alert {
+        margin-top: 10px;
+      }
+      .alert-vermelho {
+        color: red;
+        font-weight: bold;
+      }
+      .alert-laranja {
+        color: orange;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Botões para alternar entre as calculadoras -->
+    <div class="button-container">
+      <button onclick="window.location.href='./index.html'">
+        Calculadora A.C.E.
+      </button>
+      <button onclick="window.location.href='./fluxo.html'">
+        Calculadora de Fluxo
+      </button>
+      <button onclick="window.location.href='./vv.html'">
+        Calculadora Volumétrica
+      </button>
+    </div>
+
+    <div class="container">
+      <h1>Calculadora Volumétrica</h1>
+
+      <p>O que você quer calcular?</p>
+
+      <div class="radio-container">
+        <label
+          ><input
+            type="radio"
+            name="calculationOption"
+            value="volumetricSpeed"
+            onclick="updateVolumetricInterface()"
+          />
+          Velocidade Volumétrica</label
+        >
+        <label
+          ><input
+            type="radio"
+            name="calculationOption"
+            value="printSpeed"
+            onclick="updateVolumetricInterface()"
+          />
+          Velocidade de Impressão</label
+        >
+      </div>
+
+      <!-- Parâmetros de Impressão -->
+      <div class="input-group">
+        <input
+          type="number"
+          id="layerHeight"
+          step="0.02"
+          placeholder="Ex: 0.2"
+        />
+        <label for="layerHeight">Altura da Camada (mm)</label>
+      </div>
+
+      <div class="input-group">
+        <input
+          type="number"
+          id="nozzleDiameter"
+          step="0.1"
+          placeholder="Ex: 0.4"
+        />
+        <label for="nozzleDiameter">Diâmetro do Bico (mm)</label>
+      </div>
+
+      <!-- Terceira variável (Velocidade de Impressão ou Velocidade Volumétrica) -->
+      <div class="section" id="additionalVariable"></div>
+
+      <button onclick="calculateVolumetric()">Calcular</button>
+
+      <div class="result" id="result"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="alert" id="alertMessage"></div>
+    </div>
+    <script src="../js/functions.js"></script>
+  </body>
+</html>
