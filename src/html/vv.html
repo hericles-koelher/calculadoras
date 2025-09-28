@@ -1,158 +1,284 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="light-theme">
   <head>
-    <meta charset="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculadora Volumétrica</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
+      .dark-theme {
+        background: #23272f !important;
+        color: #e0e0e0 !important;
       }
-      .button-container {
+      .dark-theme .navbar,
+      .dark-theme .box,
+      .dark-theme .notification {
+        background: #2d323b !important;
+        color: #e0e0e0 !important;
+      }
+      .dark-theme .navbar-item,
+      .dark-theme .navbar-item:hover {
+        background: #444 !important;
+        color: #fff !important;
+      }
+      .dark-theme .title,
+      .dark-theme h1,
+      .dark-theme h2,
+      .dark-theme h3,
+      .dark-theme h4,
+      .dark-theme h5,
+      .dark-theme h6 {
+        color: #e0e0e0 !important;
+      }
+      .dark-theme .label {
+        color: #e0e0e0 !important;
+      }
+      .dark-theme ::placeholder {
+        color: #b0b0b0 !important;
+        opacity: 1 !important;
+      }
+      .dark-theme #toggle-theme {
+        background: #2d323b !important; /* Cor exata da navbar no modo escuro */
+        color: #e0e0e0 !important;
+      }
+      .dark-theme .radio:hover,
+      .dark-theme .radio input[type="radio"]:hover {
+        color: #fff !important;
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .light-theme {
+        background: #fff !important;
+        color: #222 !important;
+      }
+      .light-theme #toggle-theme {
+        background: #f5f5f5 !important;
+        color: #222 !important;
+      }
+      .navbar-end {
+        position: absolute;
+        right: 1.5rem;
+        top: 0.5rem;
+      }
+    </style>
+    <style>
+      .menu-center {
         display: flex;
         justify-content: center;
-        gap: 10px;
-        margin-bottom: 20px;
-        position: fixed;
-        top: 10px;
-        left: 0;
         width: 100%;
-        background-color: white;
-        padding: 10px 0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
-      button {
-        width: 150px;
-        padding: 10px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+      .dark-theme .navbar-item {
+        background: #2d323b !important;
+        color: #fff !important;
+        border: none !important;
       }
-      button:hover {
-        background-color: #218838;
-      }
-      .container {
-        max-width: 400px;
-        margin: 60px auto 20px auto; /* Ajuste para compensar os botões fixos */
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-      }
-      input {
-        width: 100%;
-        padding: 5px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      .input-group {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-      }
-      .input-group label {
-        margin-left: 10px;
+      .dark-theme .navbar-item.is-active {
+        background: #3273dc !important;
+        color: #fff !important;
         font-weight: bold;
-        width: 50%;
+        border-radius: 6px;
+        border: 2px solid #1976d2 !important;
+        box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
       }
-      .result {
-        margin-top: 20px;
-        font-size: 18px;
+      .dark-theme .navbar-item:not(.is-active):hover {
+        background: #23272f !important;
+        color: #90caf9 !important;
+        border-radius: 6px;
+        transition: background 0.2s, color 0.2s;
+      }
+      .light-theme .navbar-item {
+        background: #fff !important;
+        color: #222 !important;
+        border: none !important;
+      }
+      .light-theme .navbar-item.is-active {
+        background: #3273dc !important;
+        color: #fff !important;
         font-weight: bold;
+        border-radius: 6px;
+        border: 2px solid #1976d2 !important;
+        box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
       }
-      .explanation {
-        font-size: 14px;
-        margin-top: 5px;
+      .light-theme .navbar-item:not(.is-active):hover {
+        background: #f5f5f5 !important;
+        color: #3273dc !important;
+        border-radius: 6px;
+        transition: background 0.2s, color 0.2s;
       }
-      .alert {
-        margin-top: 10px;
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("toggle-theme");
+        const icon = document.getElementById("theme-icon");
+        btn.addEventListener("click", function () {
+          const html = document.documentElement;
+          if (html.classList.contains("light-theme")) {
+            html.classList.remove("light-theme");
+            html.classList.add("dark-theme");
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+          } else {
+            html.classList.remove("dark-theme");
+            html.classList.add("light-theme");
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+          }
+        });
+      });
+    </script>
+    <style>
+      .dark-theme .input,
+      .dark-theme input,
+      .dark-theme select,
+      .dark-theme textarea {
+        background: #23272f !important;
+        color: #e0e0e0 !important;
+        border-color: #444 !important;
       }
-      .alert-vermelho {
-        color: red;
-        font-weight: bold;
+      .dark-theme .label {
+        color: #e0e0e0 !important;
       }
-      .alert-laranja {
-        color: orange;
-        font-weight: bold;
+      .dark-theme .box {
+        border-color: #444 !important;
+      }
+      .dark-theme .notification {
+        border-color: #444 !important;
       }
     </style>
   </head>
   <body>
-    <!-- Botões para alternar entre as calculadoras -->
-    <div class="button-container">
-      <button onclick="window.location.href='./index.html'">
-        Calculadora ACE
-      </button>
-      <button onclick="window.location.href='./fluxo.html'">
-        Calculadora de Fluxo
-      </button>
-      <button onclick="window.location.href='./vv.html'">
-        Calculadora Volumétrica
-      </button>
-      <button onclick="window.location.href='./pbc.html'">
-        Calculadora PBC
-      </button>
-    </div>
-
-    <div class="container">
-      <h1>Calculadora Volumétrica</h1>
-
-      <p>O que você quer calcular?</p>
-
-      <div class="radio-container">
-        <label
-          ><input
-            type="radio"
-            name="calculationOption"
-            value="volumetricSpeed"
-            onclick="updateVolumetricInterface()"
-          />
-          Velocidade Volumétrica</label
-        >
-        <label
-          ><input
-            type="radio"
-            name="calculationOption"
-            value="printSpeed"
-            onclick="updateVolumetricInterface()"
-          />
-          Velocidade de Impressão</label
-        >
+    <!-- Menu de navegação -->
+    <nav
+      class="navbar is-fixed-top is-light"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-menu is-active">
+        <div class="navbar-start menu-center">
+          <a class="navbar-item" href="./index.html">Calculadora ACE</a>
+          <a class="navbar-item" href="./fluxo.html">Calculadora de Fluxo</a>
+          <a class="navbar-item is-active" href="./vv.html">Calculadora Volumétrica</a>
+          <a class="navbar-item" href="./pbc.html">Calculadora PBC</a>
+        </div>
+        <div class="navbar-end">
+          <button
+            id="toggle-theme"
+            style="border: none; box-shadow: none"
+            aria-label="Alternar tema"
+          >
+            <span class="icon">
+              <i id="theme-icon" class="fas fa-moon"></i>
+            </span>
+          </button>
+        </div>
       </div>
-
-      <!-- Parâmetros de Impressão -->
-      <div class="input-group">
-        <input
-          type="number"
-          id="layerHeight"
-          step="0.02"
-          placeholder="Ex: 0.2"
-        />
-        <label for="layerHeight">Altura da Camada (mm)</label>
+    </nav>
+    <section class="section" style="padding-top: 5rem">
+      <div class="container is-max-desktop">
+        <div class="box">
+          <h1 class="title is-4">Calculadora Volumétrica</h1>
+          <p>O que você quer calcular?</p>
+          <div class="field">
+            <div class="control">
+              <label class="radio">
+                <input
+                  type="radio"
+                  name="calculationOption"
+                  value="volumetricSpeed"
+                  onclick="updateVolumetricInterface()"
+                />
+                Velocidade Volumétrica
+              </label>
+              <label class="radio">
+                <input
+                  type="radio"
+                  name="calculationOption"
+                  value="printSpeed"
+                  onclick="updateVolumetricInterface()"
+                />
+                Velocidade de Impressão
+              </label>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field">
+                <div class="control">
+                  <input
+                    class="input"
+                    type="number"
+                    id="layerHeight"
+                    step="0.02"
+                    placeholder="Ex: 0.2"
+                  />
+                </div>
+                <label class="label" for="layerHeight"
+                  >Altura da Camada (mm)</label
+                >
+              </div>
+              <div class="field">
+                <div class="control">
+                  <div class="control">
+                    <label class="radio"
+                      ><input type="radio" name="nozzleDiameter" value="0.2" checked /> 0.2 mm</label>
+                    <label class="radio"
+                      ><input type="radio" name="nozzleDiameter" value="0.4" /> 0.4 mm</label>
+                    <label class="radio"
+                      ><input type="radio" name="nozzleDiameter" value="0.6" /> 0.6 mm</label>
+                    <label class="radio"
+                      ><input type="radio" name="nozzleDiameter" value="0.8" /> 0.8 mm</label>
+                    <label class="radio"
+                      ><input type="radio" name="nozzleDiameter" value="1.0" /> 1.0 mm</label>
+                  </div>
+                  <label class="label">Diâmetro do Bico:</label>
+              </div>
+            </div>
+          </div>
+          <div id="additionalVariable"></div>
+          <div class="field">
+            <div class="control">
+              <button
+                class="button is-success is-fullwidth"
+                onclick="calculateVolumetric()"
+              >
+                Calcular
+              </button>
+            </div>
+          </div>
+          <div
+            class="notification is-info is-light"
+            id="result"
+            style="
+              margin-top: 1rem;
+              text-align: center;
+              font-size: 1.5em;
+              font-weight: bold;
+            "
+            hidden
+          ></div>
+          <div
+            class="notification is-primary is-light"
+            id="explanation"
+            style="margin-top: 0.5rem"
+            hidden
+          ></div>
+          <div
+            class="notification is-warning is-light"
+            id="alertMessage"
+            style="margin-top: 0.5rem"
+            hidden
+          ></div>
+        </div>
       </div>
-
-      <div class="input-group">
-        <input
-          type="number"
-          id="nozzleDiameter"
-          step="0.1"
-          placeholder="Ex: 0.4"
-        />
-        <label for="nozzleDiameter">Diâmetro do Bico (mm)</label>
-      </div>
-
-      <!-- Terceira variável (Velocidade de Impressão ou Velocidade Volumétrica) -->
-      <div class="section" id="additionalVariable"></div>
-
-      <button onclick="calculateVolumetric()">Calcular</button>
-
-      <div class="result" id="result"></div>
-      <div class="explanation" id="explanation"></div>
-      <div class="alert" id="alertMessage"></div>
-    </div>
+    </section>
     <script src="../js/functions.js"></script>
   </body>
 </html>

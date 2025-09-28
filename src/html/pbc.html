@@ -1,164 +1,297 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="light-theme">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculadora de Ângulo P.B.C</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
+      .dark-theme {
+        background: #23272f !important;
+        color: #e0e0e0 !important;
       }
-      .switch-calculator {
+      .dark-theme .navbar,
+      .dark-theme .box,
+      .dark-theme .notification {
+        background: #2d323b !important;
+        color: #e0e0e0 !important;
+      }
+      .dark-theme .navbar-item,
+      .dark-theme .navbar-item:hover {
+        background: #444 !important;
+        color: #fff !important;
+      }
+      .dark-theme .title,
+      .dark-theme h1,
+      .dark-theme h2,
+      .dark-theme h3,
+      .dark-theme h4,
+      .dark-theme h5,
+      .dark-theme h6 {
+        color: #e0e0e0 !important;
+      }
+      .dark-theme .label {
+        color: #e0e0e0 !important;
+      }
+      .dark-theme ::placeholder {
+        color: #b0b0b0 !important;
+        opacity: 1 !important;
+      }
+      .dark-theme #toggle-theme {
+        background: #2d323b !important; /* Cor exata da navbar no modo escuro */
+        color: #e0e0e0 !important;
+      }
+      .dark-theme .radio:hover,
+      .dark-theme .radio input[type="radio"]:hover {
+        color: #fff !important;
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+      .light-theme {
+        background: #fff !important;
+        color: #222 !important;
+      }
+      .light-theme #toggle-theme {
+        background: #f5f5f5 !important;
+        color: #222 !important;
+      }
+      .navbar-end {
+        position: absolute;
+        right: 1.5rem;
+        top: 0.5rem;
+      }
+    </style>
+    <style>
+      .menu-center {
         display: flex;
         justify-content: center;
-        gap: 10px;
-        margin-bottom: 20px;
-        position: fixed;
-        top: 10px;
-        left: 0;
         width: 100%;
-        background-color: white;
-        padding: 10px 0;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
-      .switch-calculator button {
-        width: 150px;
-        padding: 10px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+      .dark-theme .navbar-item {
+        background: #2d323b !important;
+        color: #fff !important;
+        border: none !important;
       }
-      .switch-calculator button:hover {
-        background-color: #218838;
-      }
-      .container {
-        max-width: 600px;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-      }
-      input[type="number"],
-      select {
-        width: 100%;
-        padding: 8px;
-        margin: 10px 0;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      button {
-        width: 100%;
-        padding: 10px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #218838;
-      }
-      .result {
-        margin-top: 20px;
-        font-size: 18px;
+      .dark-theme .navbar-item.is-active {
+        background: #3273dc !important;
+        color: #fff !important;
         font-weight: bold;
+        border-radius: 6px;
+        border: 2px solid #1976d2 !important;
+        box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
       }
-      .software-options,
-      .bico-options {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin: 20px 0;
+      .dark-theme .navbar-item:not(.is-active):hover {
+        background: #23272f !important;
+        color: #90caf9 !important;
+        border-radius: 6px;
+        transition: background 0.2s, color 0.2s;
       }
-      .software-options img {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 5px;
+      .light-theme .navbar-item {
+        background: #fff !important;
+        color: #222 !important;
+        border: none !important;
       }
-      .error,
-      .suggestion {
+      .light-theme .navbar-item.is-active {
+        background: #3273dc !important;
+        color: #fff !important;
         font-weight: bold;
-        margin-top: 10px;
+        border-radius: 6px;
+        border: 2px solid #1976d2 !important;
+        box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
       }
-      .error {
-        color: red;
+      .light-theme .navbar-item:not(.is-active):hover {
+        background: #f5f5f5 !important;
+        color: #3273dc !important;
+        border-radius: 6px;
+        transition: background 0.2s, color 0.2s;
       }
-      .suggestion {
-        color: orange;
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const btn = document.getElementById("toggle-theme");
+        const icon = document.getElementById("theme-icon");
+        btn.addEventListener("click", function () {
+          const html = document.documentElement;
+          if (html.classList.contains("light-theme")) {
+            html.classList.remove("light-theme");
+            html.classList.add("dark-theme");
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+          } else {
+            html.classList.remove("dark-theme");
+            html.classList.add("light-theme");
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+          }
+        });
+      });
+    </script>
+    <style>
+      .dark-theme .input,
+      .dark-theme input,
+      .dark-theme select,
+      .dark-theme textarea {
+        background: #23272f !important;
+        color: #e0e0e0 !important;
+        border-color: #444 !important;
+      }
+      .dark-theme .label {
+        color: #e0e0e0 !important;
+      }
+      .dark-theme .box {
+        border-color: #444 !important;
+      }
+      .dark-theme .notification {
+        border-color: #444 !important;
       }
     </style>
   </head>
   <body>
-    <!-- Barra de botões de navegação -->
-    <div class="switch-calculator">
-      <button onclick="window.location.href='./index.html'">
-        Calculadora ACE
-      </button>
-      <button onclick="window.location.href='./fluxo.html'">
-        Calculadora de Fluxo
-      </button>
-      <button onclick="window.location.href='./vv.html'">
-        Calculadora Volumétrica
-      </button>
-      <button onclick="window.location.href='./pbc.html'">
-        Calculadora PBC
-      </button>
-    </div>
-    <div class="container" style="margin-top: 80px">
-      <h1>Calculadora de Ângulo P.B.C</h1>
-      <p>
-        Digite o ângulo desejado, selecione o software e o diâmetro do bico:
-      </p>
-
-      <label for="angle">Ângulo (°):</label>
-      <input
-        type="number"
-        id="angle"
-        step="0.1"
-        min="1"
-        max="89"
-        placeholder="Ex: 39"
-      />
-
-      <div class="software-options">
-        <label>
-          <img src="../../assets/orcaslicer-logo.png" alt="OrcaSlicer" />
-          <div>
-            <input type="radio" name="software" value="orca" checked />
-            OrcaSlicer
-          </div>
-        </label>
-        <label>
-          <img
-            src="../../assets/ultimaker_cura_macos_bigsur_icon_189596.webp"
-            alt="Ultimaker Cura"
-          />
-          <div>
-            <input type="radio" name="software" value="cura" /> Ultimaker Cura
-          </div>
-        </label>
+    <!-- Menu de navegação -->
+    <nav
+      class="navbar is-fixed-top is-light"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-menu is-active">
+        <div class="navbar-start menu-center">
+          <a class="navbar-item" href="./index.html">Calculadora ACE</a>
+          <a class="navbar-item" href="./fluxo.html">Calculadora de Fluxo</a>
+          <a class="navbar-item" href="./vv.html">Calculadora Volumétrica</a>
+          <a class="navbar-item is-active" href="./pbc.html">Calculadora PBC</a>
+        </div>
+        <div class="navbar-end">
+          <button
+            id="toggle-theme"
+            style="border: none; box-shadow: none"
+            aria-label="Alternar tema"
+          >
+            <span class="icon">
+              <i id="theme-icon" class="fas fa-moon"></i>
+            </span>
+          </button>
+        </div>
       </div>
-
-      <div class="nozzle-options">
-        <label
-          ><input type="radio" name="nozzle" value="0.2" checked /> 0.2
-          mm</label
-        >
-        <label><input type="radio" name="nozzle" value="0.4" /> 0.4 mm</label>
-        <label><input type="radio" name="nozzle" value="0.6" /> 0.6 mm</label>
-        <label><input type="radio" name="nozzle" value="0.8" /> 0.8 mm</label>
-        <label><input type="radio" name="nozzle" value="1.0" /> 1.0 mm</label>
+    </nav>
+    <section class="section" style="padding-top: 5rem">
+      <div class="container is-max-desktop">
+        <div class="box">
+          <h1 class="title is-4">Calculadora de Ângulo P.B.C</h1>
+          <p>
+            Digite o ângulo desejado, selecione o software e o diâmetro do bico:
+          </p>
+          <br />
+          <div class="field">
+            <label class="label" for="angle">Ângulo (°):</label>
+            <div class="control">
+              <input
+                class="input"
+                type="number"
+                id="angle"
+                step="0.1"
+                min="1"
+                max="89"
+                placeholder="Ex: 39"
+              />
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Software:</label>
+            <div class="control">
+              <label class="radio">
+                <input type="radio" name="software" value="orca" checked />
+                <img
+                  src="../../assets/orcaslicer-logo.png"
+                  alt="OrcaSlicer"
+                  style="
+                    height: 1.5em;
+                    vertical-align: middle;
+                    margin-right: 0.3em;
+                  "
+                />
+                OrcaSlicer
+              </label>
+              <label class="radio">
+                <input type="radio" name="software" value="cura" />
+                <img
+                  src="../../assets/ultimaker_cura_macos_bigsur_icon_189596.webp"
+                  alt="Ultimaker Cura"
+                  style="
+                    height: 1.5em;
+                    vertical-align: middle;
+                    margin-right: 0.3em;
+                  "
+                />
+                Ultimaker Cura
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <label class="label">Diâmetro do Bico:</label>
+            <div class="control">
+              <label class="radio"
+                ><input type="radio" name="nozzle" value="0.2" checked /> 0.2
+                mm</label
+              >
+              <label class="radio"
+                ><input type="radio" name="nozzle" value="0.4" /> 0.4 mm</label
+              >
+              <label class="radio"
+                ><input type="radio" name="nozzle" value="0.6" /> 0.6 mm</label
+              >
+              <label class="radio"
+                ><input type="radio" name="nozzle" value="0.8" /> 0.8 mm</label
+              >
+              <label class="radio"
+                ><input type="radio" name="nozzle" value="1.0" /> 1.0 mm</label
+              >
+            </div>
+          </div>
+          <br />
+          <div class="field">
+            <div class="control">
+              <button
+                class="button is-success is-fullwidth"
+                onclick="calculatePBC()"
+              >
+                Calcular
+              </button>
+            </div>
+          </div>
+          <div
+            class="notification is-info is-light"
+            id="result"
+            style="
+              margin-top: 1rem;
+              text-align: center;
+              font-size: 1.5em;
+              font-weight: bold;
+            "
+            hidden
+          ></div>
+          <div
+            class="notification is-warning is-light"
+            id="suggestionMessage"
+            style="
+              margin-top: 0.5rem;
+              text-align: center;
+              font-size: 1.2em;
+              background: #fffbe6;
+              border: 2px solid #ffe08a;
+            "
+            hidden
+          ></div>
+        </div>
       </div>
-
-      <button onclick="calculatePBC()">Calcular</button>
-
-      <div class="result" id="result"></div>
-      <div class="error" id="errorMessage"></div>
-      <div class="suggestion" id="suggestionMessage"></div>
-    </div>
+    </section>
     <script src="../js/functions.js"></script>
   </body>
 </html>
