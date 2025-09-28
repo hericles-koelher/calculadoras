@@ -31,7 +31,8 @@ function normalizeNumber(value, decimalPlaces = 2) {
  */
 function calculateCriticalExtrusionAngle() {
   const nozzleDiameter = normalizeNumber(
-    document.getElementById("nozzleDiameter").value
+    document.getElementById("nozzleDiameter").value,
+    1
   );
   const layerHeight = normalizeNumber(
     document.getElementById("layerHeight").value
@@ -125,11 +126,14 @@ function calculateNewFlow() {
 
   document.getElementById(
     "result"
-  ).textContent = `O novo fluxo deve ser ajustado para: ${newFlow.toFixed(2)}%`;
+  ).textContent = `O novo fluxo deve ser ajustado para: ${newFlow}%`;
 }
 
 /**
  * Calcula a altura de camada ideal para o ângulo P.B.C.
+ *
+ * PBC significa "Proporção Bico Camada", uma relação na impressão 3D FDM que conecta
+ * o diâmetro do bico à altura da camada impressa.
  *
  * Entradas:
  *   - Ângulo desejado: input HTML com id "angle".
@@ -152,7 +156,8 @@ function calculatePBC() {
     'input[name="software"]:checked'
   ).value;
   const selectedNozzle = normalizeNumber(
-    document.querySelector('input[name="nozzle"]:checked').value
+    document.querySelector('input[name="nozzle"]:checked').value,
+    1
   );
 
   // Limpa mensagens anteriores
@@ -188,9 +193,7 @@ function calculatePBC() {
   );
   const isWithinBounds = Math.abs(formattedHeight - roundedHeight) < 0.001;
 
-  let resultHTML = `Altura da Camada para o Bico ${selectedNozzle.toFixed(
-    1
-  )} mm: `;
+  let resultHTML = `Altura da Camada para o Bico ${selectedNozzle} mm: `;
 
   if (!isWithinBounds || outOfLimits) {
     resultHTML += `<span style="color: red;">${formattedHeight} mm (fora do esperado ou limites)</span>`;
@@ -272,7 +275,8 @@ function calculateVolumetric() {
     document.getElementById("layerHeight").value
   );
   const nozzleDiameter = normalizeNumber(
-    document.getElementById("nozzleDiameter").value
+    document.getElementById("nozzleDiameter").value,
+    1
   );
   const option = document.querySelector(
     'input[name="calculationOption"]:checked'
@@ -326,12 +330,10 @@ function calculateVolumetric() {
 
     document.getElementById(
       "result"
-    ).textContent = `A Velocidade Volumétrica é: ${result.toFixed(2)} mm³/s`;
+    ).textContent = `A Velocidade Volumétrica é: ${result} mm³/s`;
     document.getElementById(
       "explanation"
-    ).textContent = `Para você imprimir na velocidade ${printSpeed} mm/s, você precisa de um filamento com vazão volumétrica de ${result.toFixed(
-      2
-    )} mm³/s.`;
+    ).textContent = `Para você imprimir na velocidade ${printSpeed} mm/s, você precisa de um filamento com vazão volumétrica de ${result} mm³/s.`;
   } else {
     const volumetricSpeed = normalizeNumber(
       document.getElementById("volumetricSpeed").value
@@ -349,11 +351,9 @@ function calculateVolumetric() {
 
     document.getElementById(
       "result"
-    ).textContent = `A Velocidade de Impressão é: ${result.toFixed(2)} mm/s`;
+    ).textContent = `A Velocidade de Impressão é: ${result} mm/s`;
     document.getElementById(
       "explanation"
-    ).textContent = `Para imprimir com a vazão volumétrica de ${volumetricSpeed.toFixed(
-      2
-    )} mm³/s, você precisa atingir a velocidade de ${result.toFixed(2)} mm/s.`;
+    ).textContent = `Para imprimir com a vazão volumétrica de ${volumetricSpeed} mm³/s, você precisa atingir a velocidade de ${result} mm/s.`;
   }
 }
