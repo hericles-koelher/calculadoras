@@ -1,4 +1,18 @@
 /**
+ * Realiza a normalização de um número para um formato float com casas decimais definidas.
+ * O processo envolve tornar o número passado na entrada em um float e arrendondá-lo para o
+ * número de casas decimais especificado, evitando problemas de precisão com floats em JavaScript.
+ *
+ * @param {string|number} value - O valor a ser normalizado.
+ * @param {number} decimalPlaces - Número de casas decimais para arredondar (padrão é 2).
+ *
+ * @returns {number} - O número normalizado como float.
+ */
+function normalizeNumber(value, decimalPlaces = 2) {
+  return parseFloat(parseFloat(value).toFixed(decimalPlaces));
+}
+
+/**
  * Calcula o ângulo crítico de extrusão (A.C.E.).
  *
  * Entradas:
@@ -16,10 +30,12 @@
  *   - O cálculo é baseado na relação entre a altura da camada e a largura de extrusão, usando a função arco-tangente.
  */
 function calculateCriticalExtrusionAngle() {
-  const nozzleDiameter = parseFloat(
+  const nozzleDiameter = normalizeNumber(
     document.getElementById("nozzleDiameter").value
   );
-  const layerHeight = parseFloat(document.getElementById("layerHeight").value);
+  const layerHeight = normalizeNumber(
+    document.getElementById("layerHeight").value
+  );
 
   if (isNaN(nozzleDiameter) || isNaN(layerHeight)) {
     document.getElementById("result").textContent =
@@ -30,14 +46,14 @@ function calculateCriticalExtrusionAngle() {
 
   // Largura de extrusão igual ao diâmetro do bico
   const extrusionWidth = nozzleDiameter;
-  const angleRad = Math.atan(layerHeight / (extrusionWidth / 2));
-  const overhangAngle = 90 - (angleRad * 180) / Math.PI;
+  const angleRad = Math.atan(
+    normalizeNumber(layerHeight / (extrusionWidth / 2))
+  );
+  const overhangAngle = normalizeNumber(90 - (angleRad * 180) / Math.PI);
 
   document.getElementById(
     "result"
-  ).textContent = `O ângulo máximo de overhang sem suporte é ${overhangAngle.toFixed(
-    2
-  )}°`;
+  ).textContent = `O ângulo máximo de overhang sem suporte é ${overhangAngle}°`;
 }
 
 /**
@@ -63,7 +79,9 @@ function calculateNewFlow() {
   const measurements = [];
   for (let i = 1; i <= 4; i++) {
     for (let j = 1; j <= 5; j++) {
-      const value = parseFloat(document.getElementById(`wall${i}_${j}`).value);
+      const value = normalizeNumber(
+        document.getElementById(`wall${i}_${j}`).value
+      );
 
       if (!isNaN(value)) {
         measurements.push(value);
@@ -81,13 +99,15 @@ function calculateNewFlow() {
 
   // Calcula a média das medidas
   const sumMeasurements = measurements.reduce((a, b) => a + b, 0);
-  const avgMeasurements = sumMeasurements / measurements.length;
+  const avgMeasurements = normalizeNumber(
+    sumMeasurements / measurements.length
+  );
 
   // Obter largura de extrusão e fluxo configurado
-  const extrusionWidth = parseFloat(
+  const extrusionWidth = normalizeNumber(
     document.getElementById("extrusionWidthSlicer").value
   );
-  const configuredFlow = parseFloat(
+  const configuredFlow = normalizeNumber(
     document.getElementById("flowSlicer").value
   );
 
@@ -99,7 +119,9 @@ function calculateNewFlow() {
   }
 
   // Calcula o novo fluxo usando regra de três
-  const newFlow = (extrusionWidth / avgMeasurements) * configuredFlow;
+  const newFlow = normalizeNumber(
+    (extrusionWidth / avgMeasurements) * configuredFlow
+  );
 
   document.getElementById(
     "result"
@@ -125,11 +147,11 @@ function calculateNewFlow() {
  *   - Sugere ajustes para garantir múltiplos de 0.02 mm e respeitar limites seguros de impressão.
  */
 function calculatePBC() {
-  const angleInput = parseFloat(document.getElementById("angle").value);
+  const angleInput = normalizeNumber(document.getElementById("angle").value);
   const selectedSoftware = document.querySelector(
     'input[name="software"]:checked'
   ).value;
-  const selectedNozzle = parseFloat(
+  const selectedNozzle = normalizeNumber(
     document.querySelector('input[name="nozzle"]:checked').value
   );
 
@@ -150,37 +172,30 @@ function calculatePBC() {
   const angleRad = orcaAngle * (Math.PI / 180); // Converter para radianos
 
   // Calcula altura de camada
-  const layerHeight = Math.tan(angleRad) * (selectedNozzle / 2);
-  const formattedHeight = parseFloat(layerHeight.toFixed(2));
+  const layerHeight = normalizeNumber(
+    Math.tan(angleRad) * (selectedNozzle / 2)
+  );
+  const formattedHeight = normalizeNumber(layerHeight);
 
   // Verifica limites de altura
-  const minHeight = selectedNozzle * 0.2;
-  const maxHeight = selectedNozzle * 0.8;
+  const minHeight = normalizeNumber(selectedNozzle * 0.2);
+  const maxHeight = normalizeNumber(selectedNozzle * 0.8);
   let outOfLimits = formattedHeight < minHeight || formattedHeight > maxHeight;
 
   // Verifica se altura é múltipla de 0.02
-  const roundedHeight = Math.round(formattedHeight / 0.02) * 0.02;
-  const withinMargin = Math.abs(formattedHeight - roundedHeight) < 0.001;
+  const roundedHeight = normalizeNumber(
+    normalizeNumber(Math.round(formattedHeight / 0.02) * 0.02)
+  );
+  const isWithinBounds = Math.abs(formattedHeight - roundedHeight) < 0.001;
 
   let resultHTML = `Altura da Camada para o Bico ${selectedNozzle.toFixed(
     1
   )} mm: `;
-  if (!withinMargin || outOfLimits) {
-    // Sugere novo ângulo
-    const suggestedAngle =
-      selectedSoftware === "orca" ? angleInput + 1 : angleInput - 1;
-    const suggestedHeightRad =
-      Math.tan(suggestedAngle * (Math.PI / 180)) * (selectedNozzle / 2);
-    const suggestedHeight = Math.round(suggestedHeightRad / 0.02) * 0.02;
 
+  if (!isWithinBounds || outOfLimits) {
     resultHTML += `<span style="color: red;">${formattedHeight} mm (fora do esperado ou limites)</span>`;
-    document.getElementById(
-      "suggestionText"
-    ).textContent = `Use o ângulo ${suggestedAngle.toFixed(
-      1
-    )}° para obter uma altura de camada segura. Com esse ângulo, use a altura ${suggestedHeight.toFixed(
-      2
-    )} mm.`;
+    document.getElementById("suggestionMessage").textContent =
+      "Tente novamente com outro ângulo para obter uma altura de camada segura para sua configuração de bico.";
   } else {
     resultHTML += `${formattedHeight} mm (válido)`;
   }
@@ -253,8 +268,10 @@ function updateVolumetricInterface() {
  *   - Ajuda a ajustar parâmetros para evitar problemas de subextrusão ou sobreextrusão.
  */
 function calculateVolumetric() {
-  const layerHeight = parseFloat(document.getElementById("layerHeight").value);
-  const nozzleDiameter = parseFloat(
+  const layerHeight = normalizeNumber(
+    document.getElementById("layerHeight").value
+  );
+  const nozzleDiameter = normalizeNumber(
     document.getElementById("nozzleDiameter").value
   );
   const option = document.querySelector(
@@ -268,8 +285,9 @@ function calculateVolumetric() {
   document.getElementById("explanation").textContent = "";
 
   // Verifica proporção da altura da camada
-  const minHeight = nozzleDiameter * 0.2;
-  const maxHeight = nozzleDiameter * 0.8;
+  const minHeight = normalizeNumber(nozzleDiameter * 0.2);
+  const maxHeight = normalizeNumber(nozzleDiameter * 0.8);
+
   if (!isNaN(layerHeight) && !isNaN(nozzleDiameter)) {
     if (layerHeight < minHeight || layerHeight > maxHeight) {
       document.getElementById(
@@ -293,7 +311,9 @@ function calculateVolumetric() {
 
   // Checa terceira variável
   if (option === "volumetricSpeed") {
-    const printSpeed = parseFloat(document.getElementById("printSpeed").value);
+    const printSpeed = normalizeNumber(
+      document.getElementById("printSpeed").value
+    );
 
     if (isNaN(printSpeed)) {
       document.getElementById(
@@ -302,7 +322,7 @@ function calculateVolumetric() {
       return;
     }
 
-    result = layerHeight * nozzleDiameter * printSpeed;
+    result = normalizeNumber(layerHeight * nozzleDiameter * printSpeed);
 
     document.getElementById(
       "result"
@@ -313,7 +333,7 @@ function calculateVolumetric() {
       2
     )} mm³/s.`;
   } else {
-    const volumetricSpeed = parseFloat(
+    const volumetricSpeed = normalizeNumber(
       document.getElementById("volumetricSpeed").value
     );
 
@@ -321,10 +341,11 @@ function calculateVolumetric() {
       document.getElementById(
         "alertMessage"
       ).innerHTML += `<p class="alert-laranja">Falta preencher a Velocidade Volumétrica!</p>`;
+
       return;
     }
 
-    result = volumetricSpeed / (layerHeight * nozzleDiameter);
+    result = normalizeNumber(volumetricSpeed / (layerHeight * nozzleDiameter));
 
     document.getElementById(
       "result"
