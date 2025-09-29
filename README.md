@@ -21,6 +21,6 @@ Fornecer ferramentas simples e acessíveis para cálculos específicos, como PBC
 
 ## TODO list
 
-- Ajustar cor da seleção de páginas
-- Ajustar cor do botão de modo no tema claro
+- Extrair CSS para arquivo comum.
+- Descobrir o motivo da cor no navbar ser diferente da cor do botão.
 - Ajustar página da calculadora volumétrica

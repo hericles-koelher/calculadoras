@@ -17,7 +17,10 @@
         background: #23272f !important;
         color: #e0e0e0 !important;
       }
-      .dark-theme .navbar,
+      .dark-theme .navbar {
+        background: #2d323b !important;
+        color: #e0e0e0 !important;
+      }
       .dark-theme .box,
       .dark-theme .notification {
         background: #2d323b !important;
@@ -56,7 +59,7 @@
         box-shadow: none !important;
       }
       .light-theme {
-        background: #fff !important;
+        background: #f5f5f5 !important;
         color: #222 !important;
       }
       .light-theme #toggle-theme {
@@ -68,48 +71,53 @@
         right: 1.5rem;
         top: 0.5rem;
       }
+      .dark-theme .button.is-fullwidth {
+        background: #946fd4;
+        border-color: #946fd4;
+        color: #fff;
+      }
+      .light-theme .button.is-fullwidth {
+        background: #468938 !important;
+        border-color: #468938 !important;
+        color: #fff !important;
+      }
+      .light-theme .navbar {
+        background: #fff !important;
+      }
     </style>
     <style>
-      .menu-center {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-      }
       .dark-theme .navbar-item {
         background: #2d323b !important;
         color: #fff !important;
-        border: none !important;
+        border-radius: 6px;
       }
       .dark-theme .navbar-item.is-active {
-        background: #3273dc !important;
+        background: #946fd4 !important;
         color: #fff !important;
         font-weight: bold;
         border-radius: 6px;
-        border: 2px solid #1976d2 !important;
+        border: 2px solid #946fd4 !important;
         box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
       }
       .dark-theme .navbar-item:not(.is-active):hover {
         background: #23272f !important;
-        color: #90caf9 !important;
         border-radius: 6px;
         transition: background 0.2s, color 0.2s;
       }
       .light-theme .navbar-item {
         background: #fff !important;
-        color: #222 !important;
-        border: none !important;
+        border-radius: 6px;
       }
       .light-theme .navbar-item.is-active {
-        background: #3273dc !important;
+        background: #468938 !important;
         color: #fff !important;
         font-weight: bold;
         border-radius: 6px;
-        border: 2px solid #1976d2 !important;
+        border: 2px solid #468938 !important;
         box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
       }
       .light-theme .navbar-item:not(.is-active):hover {
         background: #f5f5f5 !important;
-        color: #3273dc !important;
         border-radius: 6px;
         transition: background 0.2s, color 0.2s;
       }
@@ -168,17 +176,7 @@
           <a class="navbar-item is-active" href="./vv.html">Calculadora Volumétrica</a>
           <a class="navbar-item" href="./pbc.html">Calculadora PBC</a>
         </div>
-        <div class="navbar-end">
-          <button
-            id="toggle-theme"
-            style="border: none; box-shadow: none"
-            aria-label="Alternar tema"
-          >
-            <span class="icon">
-              <i id="theme-icon" class="fas fa-moon"></i>
-            </span>
-          </button>
-        </div>
+        <div class="navbar-end"></div>
       </div>
     </nav>
     <section class="section" style="padding-top: 5rem">

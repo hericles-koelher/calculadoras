@@ -408,22 +408,31 @@ function calculateVolumetric() {
   function toggleTheme() {
     const current = getSavedTheme() || getSystemTheme();
     const next = current === "dark" ? "light" : "dark";
+
     setTheme(next);
   }
 
   // Adiciona botão de alternância ao menu
   function injectThemeToggle() {
     const nav = document.querySelector(".navbar-menu");
+
     if (!nav || document.getElementById("theme-toggle")) return;
+
     const endDiv = document.createElement("div");
     endDiv.className = "navbar-end";
+
+    const isThemeLight = getSavedTheme() === LIGHT_CLASS;
+
     const btn = document.createElement("button");
-    btn.className = "button is-light navbar-item is-rounded";
+    btn.className = `button ${
+      isThemeLight ? "is-light" : "is-dark"
+    } navbar-item is-rounded`;
     btn.id = "theme-toggle";
-    // Ícone sol/lua sem texto "Modo"
     btn.innerHTML = '<span class="icon"><i class="fas fa-sun"></i></span>';
     btn.onclick = toggleTheme;
+
     endDiv.appendChild(btn);
+
     nav.appendChild(endDiv);
   }
 
