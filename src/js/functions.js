@@ -42,6 +42,16 @@ function calculateCriticalExtrusionAngle() {
     document.getElementById("layerHeight").value
   );
 
+  let slicer = "orca";
+
+  const slicerRadio = document.querySelector(
+    'input[name="slicerSoftware"]:checked'
+  );
+
+  if (slicerRadio) {
+    slicer = slicerRadio.value;
+  }
+
   if (isNaN(nozzleDiameter) || isNaN(layerHeight)) {
     resultEl.textContent = "Por favor, insira valores válidos.";
     resultEl.hidden = false;
@@ -53,9 +63,16 @@ function calculateCriticalExtrusionAngle() {
   const angleRad = Math.atan(
     normalizeNumber(layerHeight / (extrusionWidth / 2))
   );
-  const overhangAngle = normalizeNumber(90 - (angleRad * 180) / Math.PI);
+  let overhangAngle = normalizeNumber(90 - (angleRad * 180) / Math.PI);
 
-  resultEl.textContent = `Ângulo máximo de inclinação sem suporte: ${overhangAngle}°`;
+  // Se Orca, mostrar complementar
+  if (slicer === "orca") {
+    overhangAngle = normalizeNumber(90 - overhangAngle);
+    resultEl.textContent = `Ângulo máximo de inclinação (OrcaSlicer): ${overhangAngle}°`;
+  } else {
+    resultEl.textContent = `Ângulo máximo de inclinação (Ultimaker Cura): ${overhangAngle}°`;
+  }
+
   resultEl.hidden = false;
 }
 
