@@ -1,6 +1,6 @@
 # Calculadoras
 
-Este projeto reúne diversas calculadoras para facilitar cálculos técnicos e operacionais.
+Este projeto reúne diversas calculadoras para facilitar o processo de decidir algumas configurações de fatiamento em impressões 3D.
 
 ## Objetivo
 
