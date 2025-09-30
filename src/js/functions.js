@@ -55,7 +55,7 @@ function calculateCriticalExtrusionAngle() {
   );
   const overhangAngle = normalizeNumber(90 - (angleRad * 180) / Math.PI);
 
-  resultEl.textContent = `O ângulo máximo de overhang sem suporte é ${overhangAngle}°`;
+  resultEl.textContent = `Ângulo máximo de inclinação sem suporte: ${overhangAngle}°`;
   resultEl.hidden = false;
 }
 
@@ -98,7 +98,8 @@ function calculateNewFlow() {
 
   // Verifica se todas as 20 medições foram preenchidas
   if (measurements.length !== 20) {
-    resultEl.textContent = "Por favor, preencha todas as 20 medições.";
+    resultEl.textContent =
+      "Preencha todas as 20 medições para calcular o novo fluxo.";
     resultEl.hidden = false;
     return;
   }
@@ -119,7 +120,7 @@ function calculateNewFlow() {
 
   if (isNaN(extrusionWidth) || isNaN(configuredFlow)) {
     resultEl.textContent =
-      "Por favor, preencha a largura de extrusão e o fluxo do fatiador.";
+      "Informe a largura de extrusão e o fluxo configurado para continuar.";
     resultEl.hidden = false;
     return;
   }
@@ -129,7 +130,7 @@ function calculateNewFlow() {
     (extrusionWidth / avgMeasurements) * configuredFlow
   );
 
-  resultEl.textContent = `O novo fluxo deve ser ajustado para: ${newFlow}%`;
+  resultEl.textContent = `Novo valor recomendado de fluxo: ${newFlow}%`;
   resultEl.hidden = false;
 }
 
@@ -173,7 +174,7 @@ function calculatePBC() {
   suggestionEl.hidden = true;
 
   if (isNaN(angleInput) || angleInput < 1 || angleInput > 89) {
-    resultEl.innerHTML = `<span style="color: red;">Por favor, insira um ângulo válido entre 1° e 89°.</span>`;
+    resultEl.innerHTML = `<span style="color: red;">Informe um ângulo entre 1° e 89° para continuar.</span>`;
     resultEl.hidden = false;
     return;
   }
@@ -199,12 +200,12 @@ function calculatePBC() {
   );
   const isWithinBounds = Math.abs(formattedHeight - roundedHeight) < 0.001;
 
-  let resultHTML = `Altura da Camada para o Bico ${selectedNozzle} mm: `;
+  let resultHTML = `Altura de camada ideal para o bico ${selectedNozzle} mm: `;
 
   if (!isWithinBounds || outOfLimits) {
     resultHTML += `<span style="color: red;">${formattedHeight} mm</span>`;
     suggestionEl.textContent =
-      "Tente novamente com outro ângulo para obter uma altura de camada segura para sua configuração de bico.";
+      "Escolha outro ângulo para obter uma altura de camada segura para sua configuração de bico.";
     suggestionEl.hidden = false;
   } else {
     resultHTML += `${formattedHeight} mm (válido)`;
@@ -240,23 +241,37 @@ function updateVolumetricInterface() {
   additionalVar.innerHTML = "";
 
   if (option === "volumetricSpeed") {
-    // Campo para velocidade de impressão
+    // Campo para velocidade de impressão (Bulma)
     additionalVar.innerHTML = `
-      <div class="input-group">
-        <input type="number" id="printSpeed" step="5" placeholder="Ex: 60">
-        <label for="printSpeed">Velocidade de Impressão (mm/s)</label>
+      <div class="field">
+        <label class="label" for="printSpeed">Velocidade de Impressão (mm/s)</label>
+        <div class="control">
+          <input class="input" type="number" id="printSpeed" step="5" placeholder="Ex: 60">
+        </div>
       </div>
     `;
   } else {
-    // Campo para velocidade volumétrica
+    // Campo para velocidade volumétrica (Bulma)
     additionalVar.innerHTML = `
-      <div class="input-group">
-        <input type="number" id="volumetricSpeed" step="1" placeholder="Ex: 10">
-        <label for="volumetricSpeed">Velocidade Volumétrica (mm³/s)</label>
+      <div class="field">
+        <label class="label" for="volumetricSpeed">Velocidade Volumétrica (mm³/s)</label>
+        <div class="control">
+          <input class="input" type="number" id="volumetricSpeed" step="1" placeholder="Ex: 10">
+        </div>
       </div>
     `;
   }
 }
+
+// Garante que o campo padrão seja exibido ao carregar a página
+document.addEventListener("DOMContentLoaded", function () {
+  if (
+    document.getElementById("additionalVariable") &&
+    document.querySelector('input[name="calculationOption"]:checked')
+  ) {
+    updateVolumetricInterface();
+  }
+});
 
 /**
  * Calcula valores da calculadora volumétrica.
@@ -309,19 +324,19 @@ function calculateVolumetric() {
 
   if (!isNaN(layerHeight) && !isNaN(nozzleDiameter)) {
     if (layerHeight < minHeight || layerHeight > maxHeight) {
-      alertEl.innerHTML += `<p class="alert-vermelho">Alerta: A altura da camada está fora da proporção (20% a 80% do diâmetro do bico).</p>`;
+      alertEl.innerHTML += `<p class="alert-vermelho">Atenção: A altura da camada está fora da proporção recomendada (20% a 80% do diâmetro do bico).</p>`;
       alertEl.hidden = false;
     }
   }
 
   // Verifica preenchimento dos campos
   if (isNaN(layerHeight)) {
-    alertEl.innerHTML += `<p class="alert-laranja">Falta preencher a Altura da Camada!</p>`;
+    alertEl.innerHTML += `<p class="alert-laranja">Informe a altura da camada para continuar.</p>`;
     alertEl.hidden = false;
   }
 
   if (isNaN(nozzleDiameter)) {
-    alertEl.innerHTML += `<p class="alert-laranja">Falta preencher o Diâmetro do Bico!</p>`;
+    alertEl.innerHTML += `<p class="alert-laranja">Informe o diâmetro do bico para continuar.</p>`;
     alertEl.hidden = false;
   }
 
@@ -332,15 +347,15 @@ function calculateVolumetric() {
     );
 
     if (isNaN(printSpeed)) {
-      alertEl.innerHTML += `<p class="alert-laranja">Falta preencher a Velocidade de Impressão!</p>`;
+      alertEl.innerHTML += `<p class="alert-laranja">Informe a velocidade de impressão para realizar o cálculo.</p>`;
       alertEl.hidden = false;
       return;
     }
 
     result = normalizeNumber(layerHeight * nozzleDiameter * printSpeed);
 
-    resultEl.textContent = `A Velocidade Volumétrica é: ${result} mm³/s`;
-    explanationEl.textContent = `Para você imprimir na velocidade ${printSpeed} mm/s, você precisa de um filamento com vazão volumétrica de ${result} mm³/s.`;
+    resultEl.textContent = `Velocidade volumétrica calculada: ${result} mm³/s`;
+    explanationEl.textContent = `Para imprimir a ${printSpeed} mm/s, o filamento deve fornecer uma vazão volumétrica de ${result} mm³/s.`;
     resultEl.hidden = false;
     explanationEl.hidden = false;
   } else {
@@ -349,15 +364,15 @@ function calculateVolumetric() {
     );
 
     if (isNaN(volumetricSpeed)) {
-      alertEl.innerHTML += `<p class="alert-laranja">Falta preencher a Velocidade Volumétrica!</p>`;
+      alertEl.innerHTML += `<p class="alert-laranja">Informe a velocidade volumétrica para realizar o cálculo.</p>`;
       alertEl.hidden = false;
       return;
     }
 
     result = normalizeNumber(volumetricSpeed / (layerHeight * nozzleDiameter));
 
-    resultEl.textContent = `A Velocidade de Impressão é: ${result} mm/s`;
-    explanationEl.textContent = `Para imprimir com a vazão volumétrica de ${volumetricSpeed} mm³/s, você precisa atingir a velocidade de ${result} mm/s.`;
+    resultEl.textContent = `Velocidade de impressão calculada: ${result} mm/s`;
+    explanationEl.textContent = `Para imprimir com vazão volumétrica de ${volumetricSpeed} mm³/s, ajuste a velocidade para ${result} mm/s.`;
     resultEl.hidden = false;
     explanationEl.hidden = false;
   }

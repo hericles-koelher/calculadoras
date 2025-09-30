@@ -18,8 +18,3 @@ Fornecer ferramentas simples e acessíveis para cálculos específicos, como PBC
 1. Abra o arquivo `src/html/index.html` no navegador.
 2. Navegue entre as calculadoras pelas opções do menu.
 3. Cada calculadora pode ser acessada diretamente pelos arquivos HTML em `src/html/`.
-
-## TODO list
-
-- Descobrir o motivo da cor no navbar ser diferente da cor do botão.
-- Ajustar página da calculadora volumétrica
