@@ -1,4 +1,5 @@
 :root {
+  /* Cores do tema */
   --color-dark-bg: #23272f;
   --color-dark-navbar: #2d323b;
   --color-dark-box: #2d323b;
@@ -10,12 +11,57 @@
   --color-light-main: #222;
   --color-light-accent: #468938;
   --color-light-navbar: #fff;
+
+  /* Cores adicionais identificadas */
+  --color-white: #fff;
+  --color-light-border: #dbdbdb;
+  --color-shadow-blue: rgba(50, 115, 220, 0.15);
+  --color-shadow-dark: rgba(10, 10, 10, 0.1);
+
+  /* Cores para backgrounds com transparência */
+  --bg-alpha-light: rgba(0, 0, 0, 0.02);
+  --bg-alpha-light-hover: rgba(0, 0, 0, 0.08);
+  --bg-alpha-light-strong: rgba(0, 0, 0, 0.05);
+  --bg-alpha-light-hover-strong: rgba(0, 0, 0, 0.1);
+  --bg-alpha-light-minimal: rgba(0, 0, 0, 0.03);
+
+  --bg-alpha-dark: rgba(255, 255, 255, 0.05);
+  --bg-alpha-dark-hover: rgba(255, 255, 255, 0.1);
+
+  /* Borders com transparência */
+  --border-alpha-light: rgba(0, 0, 0, 0.08);
+  --border-alpha-light-hover: rgba(0, 0, 0, 0.15);
+
+  /* Valores de espaçamento e dimensões */
+  --border-radius: 6px;
+  --border-radius-small: 4px;
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
+
+  /* Valores de transição */
+  --transition-fast: 0.2s ease-in-out;
+  --transition-standard: 0.3s ease-in-out;
+  --transition-burger: 86ms ease-out;
+
+  /* Dimensões específicas */
+  --navbar-height: 3.25rem;
+  --navbar-spacing: 1.5rem;
+  --radio-height: 2.5rem;
+  --theme-toggle-size: 2.5rem;
 }
+
+/* ========================================
+   TEMAS BASE
+   ======================================== */
 
 .dark-theme {
   background: var(--color-dark-bg) !important;
   color: var(--color-dark-main) !important;
 }
+
 .dark-theme .navbar,
 .dark-theme .box,
 .dark-theme .notification,
@@ -24,27 +70,6 @@
   color: var(--color-dark-main);
 }
 
-.dark-theme .navbar-item,
-.dark-theme .navbar-item:hover {
-  background: var(--color-dark-border);
-  color: #fff;
-  border-radius: 6px;
-}
-
-.dark-theme .navbar-item.is-active {
-  background: var(--color-dark-accent);
-  color: #fff;
-  font-weight: bold;
-  border-radius: 6px;
-  border: 2px solid var(--color-dark-accent);
-  box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
-}
-
-.dark-theme .navbar-item:not(.is-active):hover {
-  background: var(--color-dark-bg);
-  border-radius: 6px;
-  transition: background 0.2s, color 0.2s;
-}
 .dark-theme .title,
 .dark-theme h1,
 .dark-theme h2,
@@ -60,75 +85,7 @@
   color: var(--color-dark-placeholder) !important;
   opacity: 1 !important;
 }
-.dark-theme .radio:hover,
-.dark-theme .radio input[type="radio"]:hover {
-  color: #fff !important;
-  background: none;
-  border: none;
-  box-shadow: none;
-}
-.light-theme {
-  background: var(--color-light-bg) !important;
-  color: var(--color-light-main) !important;
-}
 
-.light-theme #toggle-theme {
-  background: var(--color-light-bg) !important;
-  color: var(--color-light-main) !important;
-}
-.navbar-end {
-  position: absolute;
-  right: 1.5rem;
-  top: 0.5rem;
-  z-index: 30;
-}
-.dark-theme .button.is-fullwidth {
-  background: var(--color-dark-accent);
-  border-color: var(--color-dark-accent);
-  color: #fff;
-}
-
-.light-theme .button.is-fullwidth {
-  background: var(--color-light-accent) !important;
-  border-color: var(--color-light-accent) !important;
-  color: #fff !important;
-}
-.light-theme .navbar,
-.light-theme .navbar-item {
-  background: var(--color-light-navbar);
-  border-radius: 6px;
-}
-.dark-theme .navbar-item {
-  background: #2d323b !important;
-  color: #fff !important;
-  border-radius: 6px;
-}
-.dark-theme .navbar-item.is-active {
-  background: #946fd4 !important;
-  color: #fff !important;
-  font-weight: bold;
-  border-radius: 6px;
-  border: 2px solid #946fd4 !important;
-  box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
-}
-.dark-theme .navbar-item:not(.is-active):hover {
-  background: #23272f !important;
-  border-radius: 6px;
-  transition: background 0.2s, color 0.2s;
-}
-.light-theme .navbar-item.is-active {
-  background: var(--color-light-accent) !important;
-  color: #fff !important;
-  font-weight: bold;
-  border-radius: 6px;
-  border: 2px solid var(--color-light-accent) !important;
-  box-shadow: 0 2px 8px 0 rgba(50, 115, 220, 0.15);
-}
-.light-theme .navbar-item:not(.is-active):hover {
-  background: var(--color-light-bg);
-  border-radius: 6px;
-  transition: background 0.2s, color 0.2s;
-}
 .dark-theme .input,
 .dark-theme input,
 .dark-theme select,
@@ -143,22 +100,117 @@
   border-color: var(--color-dark-border) !important;
 }
 
+.light-theme {
+  background: var(--color-light-bg) !important;
+  color: var(--color-light-main) !important;
+}
+
+.light-theme #toggle-theme {
+  background: var(--color-light-bg) !important;
+  color: var(--color-light-main) !important;
+}
+
+.light-theme .navbar,
+.light-theme .navbar-item {
+  background: var(--color-light-navbar);
+  border-radius: var(--border-radius);
+}
+
+/* ========================================
+   NAVBAR - GERAL
+   ======================================== */
+
+.navbar-end {
+  position: absolute;
+  right: var(--navbar-spacing);
+  top: var(--spacing-sm);
+  z-index: 30;
+}
+
+/* Botões */
+.dark-theme .button.is-fullwidth {
+  background: var(--color-dark-accent);
+  border-color: var(--color-dark-accent);
+  color: var(--color-white);
+}
+
+.light-theme .button.is-fullwidth {
+  background: var(--color-light-accent) !important;
+  border-color: var(--color-light-accent) !important;
+  color: var(--color-white) !important;
+}
+
+/* ========================================
+   NAVBAR ITEMS - CONSOLIDADO
+   ======================================== */
+
+/* Dark theme navbar items */
+.dark-theme .navbar-item {
+  background: var(--color-dark-navbar) !important;
+  color: var(--color-white) !important;
+  border-radius: var(--border-radius);
+}
+
+.dark-theme .navbar-item:hover {
+  background: var(--color-dark-border);
+  border-radius: var(--border-radius);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.dark-theme .navbar-item.is-active {
+  background: var(--color-dark-accent) !important;
+  color: var(--color-white) !important;
+  font-weight: bold;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--color-dark-accent) !important;
+  box-shadow: 0 2px 8px 0 var(--color-shadow-blue);
+}
+
+.dark-theme .navbar-item:not(.is-active):hover {
+  background: var(--color-dark-bg) !important;
+  border-radius: var(--border-radius);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+/* Light theme navbar items */
+.light-theme .navbar-item.is-active {
+  background: var(--color-light-accent) !important;
+  color: var(--color-white) !important;
+  font-weight: bold;
+  border-radius: var(--border-radius);
+  border: 2px solid var(--color-light-accent) !important;
+  box-shadow: 0 2px 8px 0 var(--color-shadow-blue);
+}
+
+.light-theme .navbar-item:not(.is-active):hover {
+  background: var(--color-light-bg);
+  border-radius: var(--border-radius);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+/* Radio hover styles consolidados */
+.dark-theme .radio:hover,
+.dark-theme .radio input[type="radio"]:hover {
+  color: var(--color-white) !important;
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
 /* ========================================
    RESPONSIVO - MENU HAMBURGER
    ======================================== */
 
-/* Navbar burger - hidden by default */
 .navbar-burger {
   display: none;
   cursor: pointer;
-  height: 3.25rem;
+  height: var(--navbar-height);
   position: relative;
-  width: 3.25rem;
-  margin-left: 1rem;
+  width: var(--navbar-height);
+  margin-left: var(--spacing-lg);
   margin-right: auto;
 }
 
-/* Navbar burger spans (hamburger lines) */
 .navbar-burger span {
   background-color: currentColor;
   display: block;
@@ -166,7 +218,7 @@
   left: calc(50% - 8px);
   position: absolute;
   transform-origin: center;
-  transition-duration: 86ms;
+  transition-duration: var(--transition-burger);
   transition-property: background-color, opacity, transform;
   transition-timing-function: ease-out;
   width: 16px;
@@ -184,7 +236,6 @@
   top: calc(50% + 4px);
 }
 
-/* Active burger animation (X shape) */
 .navbar-burger.is-active span:nth-child(1) {
   transform: translateY(5px) rotate(45deg);
 }
@@ -197,7 +248,7 @@
   transform: translateY(-5px) rotate(-45deg);
 }
 
-/* Tema escuro para o burger */
+/* Temas para o burger */
 .dark-theme .navbar-burger span {
   background-color: var(--color-dark-main);
 }
@@ -206,7 +257,6 @@
   background-color: var(--color-dark-accent);
 }
 
-/* Tema claro para o burger */
 .light-theme .navbar-burger span {
   background-color: var(--color-light-main);
 }
@@ -219,7 +269,7 @@
    BREAKPOINTS RESPONSIVOS
    ======================================== */
 
-/* Desktop (≥1024px) - Comportamento padrão */
+/* Desktop (≥1024px) */
 @media screen and (min-width: 1024px) {
   .navbar-burger {
     display: none !important;
@@ -238,20 +288,19 @@
 
   .navbar-end {
     position: absolute;
-    right: 1.5rem;
-    top: 0.5rem;
+    right: var(--navbar-spacing);
+    top: var(--spacing-sm);
     display: flex;
     align-items: center;
   }
 }
 
-/* Tablet e Mobile (<1024px) - Menu hamburger */
+/* Tablet e Mobile (<1024px) */
 @media screen and (max-width: 1023px) {
   .navbar-burger {
     display: block !important;
   }
 
-  /* Navbar menu hidden por padrão */
   .navbar-menu {
     display: none;
     position: absolute;
@@ -259,61 +308,56 @@
     right: 0;
     top: 100%;
     background-color: inherit;
-    box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
-    padding: 0.5rem 0;
-    transition: all 0.3s ease-in-out;
+    box-shadow: 0 8px 16px var(--color-shadow-dark);
+    padding: var(--spacing-sm) 0;
+    transition: all var(--transition-standard);
     transform: translateY(-10px);
     opacity: 0;
     z-index: 20;
   }
 
-  /* Navbar menu ativo */
   .navbar-menu.is-active {
     display: block !important;
     transform: translateY(0);
     opacity: 1;
   }
 
-  /* Navbar start em coluna */
   .navbar-start {
     display: flex;
     flex-direction: column;
-    padding: 0 1rem;
+    padding: 0 var(--spacing-lg);
   }
 
-  /* Items do menu em mobile */
   .navbar-item {
     display: block;
     line-height: 1.5;
-    padding: 0.75rem 1rem;
+    padding: var(--spacing-md) var(--spacing-lg);
     position: relative;
-    margin: 0.25rem 0;
-    border-radius: 6px !important;
-    transition: all 0.2s ease-in-out;
+    margin: var(--spacing-xs) 0;
+    border-radius: var(--border-radius) !important;
+    transition: all var(--transition-fast);
   }
 
-  /* Navbar end sempre visível no canto direito */
   .navbar-end {
     position: fixed !important;
-    right: 1.5rem !important;
+    right: var(--navbar-spacing) !important;
     top: 0.15rem !important;
     display: flex !important;
     align-items: center;
     z-index: 40;
   }
 
-  /* Garantir que o toggle de tema seja sempre visível */
   #theme-toggle {
     display: flex !important;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: var(--theme-toggle-size);
+    height: var(--theme-toggle-size);
     border-radius: 50%;
-    transition: all 0.2s ease-in-out;
+    transition: all var(--transition-fast);
   }
 
-  /* Estilos específicos para tema escuro em mobile */
+  /* Temas específicos para mobile */
   .dark-theme .navbar-menu {
     background-color: var(--color-dark-navbar);
     border-top: 1px solid var(--color-dark-border);
@@ -330,13 +374,12 @@
 
   .dark-theme .navbar-item.is-active {
     background-color: var(--color-dark-accent) !important;
-    color: #fff !important;
+    color: var(--color-white) !important;
   }
 
-  /* Estilos específicos para tema claro em mobile */
   .light-theme .navbar-menu {
     background-color: var(--color-light-navbar);
-    border-top: 1px solid #dbdbdb;
+    border-top: 1px solid var(--color-light-border);
   }
 
   .light-theme .navbar-item {
@@ -350,33 +393,30 @@
 
   .light-theme .navbar-item.is-active {
     background-color: var(--color-light-accent) !important;
-    color: #fff !important;
+    color: var(--color-white) !important;
   }
 }
 
 /* ========================================
-   TRANSIÇÕES SUAVES
+   TRANSIÇÕES E ANIMAÇÕES
    ======================================== */
 
-/* Transições para todos os elementos do navbar */
 .navbar,
 .navbar-menu,
 .navbar-item,
 .navbar-burger {
-  transition: all 0.3s ease-in-out;
+  transition: all var(--transition-standard);
 }
 
-/* Transição específica para o menu mobile */
 .navbar-menu {
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  transition: transform var(--transition-standard),
+    opacity var(--transition-standard);
 }
 
-/* Hover effect suave para o burger */
 .navbar-burger:hover {
   transform: scale(1.05);
 }
 
-/* Animação de entrada para os items do menu */
 @keyframes slideInDown {
   from {
     transform: translateY(-10px);
@@ -389,7 +429,7 @@
 }
 
 .navbar-menu.is-active .navbar-item {
-  animation: slideInDown 0.3s ease-out;
+  animation: slideInDown var(--transition-standard) ease-out;
   animation-fill-mode: both;
 }
 
@@ -407,28 +447,24 @@
 }
 
 /* ========================================
-   RADIO SELECTORS RESPONSIVOS
+   RADIO SELECTORS - BASE
    ======================================== */
 
-/* Estilos base para containers de radio selectors */
 .field .control {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.75rem;
+  gap: var(--spacing-md);
 }
 
-/* Correção global: Adicionar margem esquerda ao primeiro radio para alinhamento correto */
 .radio:first-child {
-  margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+  margin-left: var(--spacing-sm) !important;
 }
 
-/* Ajuste: Garantir que o último elemento não tenha margem extra à direita */
 .radio:last-child {
   margin-right: 0 !important;
 }
 
-/* Estilos para radio labels */
 .radio {
   display: flex;
   align-items: center;
@@ -436,18 +472,17 @@
   margin-bottom: 0;
   white-space: nowrap;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all var(--transition-fast);
 }
 
 .radio input[type="radio"] {
-  margin-right: 0.5rem;
+  margin-right: var(--spacing-sm);
   cursor: pointer;
 }
 
-/* Estilos para imagens dentro de radio labels */
 .radio img {
-  margin-right: 0.5rem;
-  margin-left: 0.25rem;
+  margin-right: var(--spacing-sm);
+  margin-left: var(--spacing-xs);
   flex-shrink: 0;
 }
 
@@ -456,129 +491,106 @@
    ======================================== */
 
 @media screen and (max-width: 768px) {
-  /* Container padrão dos radio selectors em mobile */
   .field .control {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: var(--spacing-sm);
   }
 
-  /* Radio selectors individuais - estilo padrão para mobile */
   .radio {
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0.75rem 0.5rem;
+    padding: var(--spacing-md) var(--spacing-sm);
     margin: 0;
-    border-radius: 6px;
-    background-color: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    transition: all 0.2s ease-in-out;
+    border-radius: var(--border-radius);
+    background-color: var(--bg-alpha-light);
+    border: 1px solid var(--border-alpha-light);
+    transition: all var(--transition-fast);
     word-wrap: break-word;
     hyphens: auto;
   }
 
-  /* Correção Mobile: Adicionar margem esquerda ao primeiro radio */
   .radio:first-child {
-    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-left: var(--spacing-sm) !important;
     margin-top: 0 !important;
   }
 
-  /* Hover effect padrão para todos os radio selectors em mobile */
   .radio:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.15);
+    background-color: var(--bg-alpha-light-hover);
+    border-color: var(--border-alpha-light-hover);
     transform: translateY(-1px);
   }
 
-  /* Estados ativos para radio selectors selecionados */
   .radio:has(input[type="radio"]:checked) {
     background-color: var(--color-light-accent);
-    color: white;
+    color: var(--color-white);
     border-color: var(--color-light-accent);
     font-weight: 500;
   }
 
-  /* Input spacing em mobile */
   .radio input[type="radio"] {
-    margin-right: 0.75rem;
+    margin-right: var(--spacing-md);
     flex-shrink: 0;
   }
 
-  /* Ajustes para imagens em mobile */
   .radio img {
-    margin-right: 0.75rem;
+    margin-right: var(--spacing-md);
     margin-left: 0;
     height: 1.5em;
     width: auto;
   }
 
-  /* ========================================
-     GRUPOS COM MUITOS RADIO BUTTONS (5+)
-     ======================================== */
-
-  /* Detecta grupos com 5+ radio buttons e aplica grid layout */
+  /* Grupos com muitos radio buttons (5+) */
   .field .control:has(.radio:nth-child(5)) {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 0.5rem;
+    gap: var(--spacing-sm);
     align-items: stretch;
   }
 
-  /* Estilos específicos para radio buttons em grid (grupos grandes) */
   .field .control:has(.radio:nth-child(5)) .radio {
     justify-content: center;
     text-align: center;
-    padding: 0.75rem 0.5rem;
-    min-height: 2.5rem;
+    padding: var(--spacing-md) var(--spacing-sm);
+    min-height: var(--radio-height);
   }
 
-  /* ========================================
-     GRUPOS COM POUCOS RADIO BUTTONS (2-4)
-     ======================================== */
-
-  /* Grupos pequenos mantêm layout em coluna */
+  /* Grupos com poucos radio buttons (2-4) */
   .field .control:not(:has(.radio:nth-child(5))) {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 0.5rem;
+    gap: var(--spacing-sm);
   }
 
   .field .control:not(:has(.radio:nth-child(5))) .radio {
     justify-content: flex-start;
     text-align: left;
-    padding: 0.75rem 1rem;
+    padding: var(--spacing-md) var(--spacing-lg);
   }
 
-  /* ========================================
-     TEMA ESCURO - MOBILE
-     ======================================== */
-
-  /* Hover effect para tema escuro */
-  .dark-theme .radio:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: var(--color-dark-accent);
-  }
-
-  /* Estados para tema escuro */
+  /* Tema escuro - mobile */
   .dark-theme .radio {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--bg-alpha-dark);
     border-color: var(--color-dark-border);
     color: var(--color-dark-main);
   }
 
-  /* Radio selecionado - tema escuro */
+  .dark-theme .radio:hover {
+    background-color: var(--bg-alpha-dark-hover);
+    border-color: var(--color-dark-accent);
+  }
+
   .dark-theme .radio:has(input[type="radio"]:checked) {
     background-color: var(--color-dark-accent);
     border-color: var(--color-dark-accent);
-    color: white;
+    color: var(--color-white);
   }
 
-  /* Correção Mobile - Tema Escuro: Manter espaçamento consistente */
   .dark-theme .radio:first-child {
-    margin-left: 0.5rem !important;
+    margin-left: var(--spacing-sm) !important;
     margin-top: 0 !important;
   }
 }
@@ -592,60 +604,58 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
+    gap: var(--spacing-lg);
     justify-content: flex-start;
   }
 
   .radio {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-sm);
     min-width: auto;
-    padding: 0.5rem 0.75rem;
-    border-radius: 4px;
-    background-color: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all 0.2s ease-in-out;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-small);
+    background-color: var(--bg-alpha-light);
+    border: 1px solid var(--bg-alpha-light-strong);
+    transition: all var(--transition-fast);
   }
 
-  /* Correção Tablet: Adicionar margem esquerda ao primeiro radio */
   .radio:first-child {
-    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-left: var(--spacing-sm) !important;
     margin-top: 0 !important;
-    margin-bottom: 0.5rem !important;
+    margin-bottom: var(--spacing-sm) !important;
   }
 
   .radio:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    border-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--bg-alpha-light-strong);
+    border-color: var(--bg-alpha-light-hover-strong);
   }
 
   .radio:has(input[type="radio"]:checked) {
     background-color: var(--color-light-accent);
-    color: white;
+    color: var(--color-white);
     border-color: var(--color-light-accent);
   }
 
   /* Tema escuro - tablet */
   .dark-theme .radio {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--bg-alpha-dark);
     border-color: var(--color-dark-border);
   }
 
   .dark-theme .radio:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: var(--bg-alpha-dark-hover);
     border-color: var(--color-dark-accent);
   }
 
   .dark-theme .radio:has(input[type="radio"]:checked) {
     background-color: var(--color-dark-accent);
     border-color: var(--color-dark-accent);
-    color: white;
+    color: var(--color-white);
   }
 
-  /* Correção Tablet - Tema Escuro: Manter espaçamento consistente */
   .dark-theme .radio:first-child {
-    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-left: var(--spacing-sm) !important;
     margin-top: 0 !important;
-    margin-bottom: 0.5rem !important;
+    margin-bottom: var(--spacing-sm) !important;
   }
 }
 
@@ -658,36 +668,34 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
+    gap: var(--spacing-lg);
   }
 
   .radio {
     margin-right: 0;
     margin-bottom: 0;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    transition: all 0.2s ease-in-out;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-small);
+    transition: all var(--transition-fast);
   }
 
-  /* Correção Desktop: Adicionar margem esquerda ao primeiro radio */
   .radio:first-child {
-    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-left: var(--spacing-sm) !important;
     margin-top: 0 !important;
     margin-right: 0 !important;
   }
 
   .radio:hover {
-    background-color: rgba(0, 0, 0, 0.03);
-    border-radius: 4px;
+    background-color: var(--bg-alpha-light-minimal);
+    border-radius: var(--border-radius-small);
   }
 
   .dark-theme .radio:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: var(--bg-alpha-dark);
   }
 
-  /* Correção Desktop - Tema Escuro: Manter espaçamento consistente */
   .dark-theme .radio:first-child {
-    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-left: var(--spacing-sm) !important;
     margin-top: 0 !important;
     margin-right: 0 !important;
   }
