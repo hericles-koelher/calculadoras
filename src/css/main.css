@@ -405,3 +405,290 @@
 .navbar-menu.is-active .navbar-item:nth-child(4) {
   animation-delay: 0.4s;
 }
+
+/* ========================================
+   RADIO SELECTORS RESPONSIVOS
+   ======================================== */
+
+/* Estilos base para containers de radio selectors */
+.field .control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Correção global: Adicionar margem esquerda ao primeiro radio para alinhamento correto */
+.radio:first-child {
+  margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+}
+
+/* Ajuste: Garantir que o último elemento não tenha margem extra à direita */
+.radio:last-child {
+  margin-right: 0 !important;
+}
+
+/* Estilos para radio labels */
+.radio {
+  display: flex;
+  align-items: center;
+  margin-right: 0;
+  margin-bottom: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.radio input[type="radio"] {
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+/* Estilos para imagens dentro de radio labels */
+.radio img {
+  margin-right: 0.5rem;
+  margin-left: 0.25rem;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   RESPONSIVIDADE MOBILE (≤768px)
+   ======================================== */
+
+@media screen and (max-width: 768px) {
+  /* Container padrão dos radio selectors em mobile */
+  .field .control {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  /* Radio selectors individuais - estilo padrão para mobile */
+  .radio {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 0.5rem;
+    margin: 0;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease-in-out;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Correção Mobile: Adicionar margem esquerda ao primeiro radio */
+  .radio:first-child {
+    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-top: 0 !important;
+  }
+
+  /* Hover effect padrão para todos os radio selectors em mobile */
+  .radio:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+    border-color: rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+  }
+
+  /* Estados ativos para radio selectors selecionados */
+  .radio:has(input[type="radio"]:checked) {
+    background-color: var(--color-light-accent);
+    color: white;
+    border-color: var(--color-light-accent);
+    font-weight: 500;
+  }
+
+  /* Input spacing em mobile */
+  .radio input[type="radio"] {
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  /* Ajustes para imagens em mobile */
+  .radio img {
+    margin-right: 0.75rem;
+    margin-left: 0;
+    height: 1.5em;
+    width: auto;
+  }
+
+  /* ========================================
+     GRUPOS COM MUITOS RADIO BUTTONS (5+)
+     ======================================== */
+
+  /* Detecta grupos com 5+ radio buttons e aplica grid layout */
+  .field .control:has(.radio:nth-child(5)) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  /* Estilos específicos para radio buttons em grid (grupos grandes) */
+  .field .control:has(.radio:nth-child(5)) .radio {
+    justify-content: center;
+    text-align: center;
+    padding: 0.75rem 0.5rem;
+    min-height: 2.5rem;
+  }
+
+  /* ========================================
+     GRUPOS COM POUCOS RADIO BUTTONS (2-4)
+     ======================================== */
+
+  /* Grupos pequenos mantêm layout em coluna */
+  .field .control:not(:has(.radio:nth-child(5))) {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .field .control:not(:has(.radio:nth-child(5))) .radio {
+    justify-content: flex-start;
+    text-align: left;
+    padding: 0.75rem 1rem;
+  }
+
+  /* ========================================
+     TEMA ESCURO - MOBILE
+     ======================================== */
+
+  /* Hover effect para tema escuro */
+  .dark-theme .radio:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-dark-accent);
+  }
+
+  /* Estados para tema escuro */
+  .dark-theme .radio {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-dark-border);
+    color: var(--color-dark-main);
+  }
+
+  /* Radio selecionado - tema escuro */
+  .dark-theme .radio:has(input[type="radio"]:checked) {
+    background-color: var(--color-dark-accent);
+    border-color: var(--color-dark-accent);
+    color: white;
+  }
+
+  /* Correção Mobile - Tema Escuro: Manter espaçamento consistente */
+  .dark-theme .radio:first-child {
+    margin-left: 0.5rem !important;
+    margin-top: 0 !important;
+  }
+}
+
+/* ========================================
+   RESPONSIVIDADE TABLET (769px-1023px)
+   ======================================== */
+
+@media screen and (min-width: 769px) and (max-width: 1023px) {
+  .field .control {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    justify-content: flex-start;
+  }
+
+  .radio {
+    margin-bottom: 0.5rem;
+    min-width: auto;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Correção Tablet: Adicionar margem esquerda ao primeiro radio */
+  .radio:first-child {
+    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .radio:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .radio:has(input[type="radio"]:checked) {
+    background-color: var(--color-light-accent);
+    color: white;
+    border-color: var(--color-light-accent);
+  }
+
+  /* Tema escuro - tablet */
+  .dark-theme .radio {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: var(--color-dark-border);
+  }
+
+  .dark-theme .radio:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-dark-accent);
+  }
+
+  .dark-theme .radio:has(input[type="radio"]:checked) {
+    background-color: var(--color-dark-accent);
+    border-color: var(--color-dark-accent);
+    color: white;
+  }
+
+  /* Correção Tablet - Tema Escuro: Manter espaçamento consistente */
+  .dark-theme .radio:first-child {
+    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/* ========================================
+   RESPONSIVIDADE DESKTOP (≥1024px)
+   ======================================== */
+
+@media screen and (min-width: 1024px) {
+  .field .control {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .radio {
+    margin-right: 0;
+    margin-bottom: 0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Correção Desktop: Adicionar margem esquerda ao primeiro radio */
+  .radio:first-child {
+    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .radio:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+  }
+
+  .dark-theme .radio:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Correção Desktop - Tema Escuro: Manter espaçamento consistente */
+  .dark-theme .radio:first-child {
+    margin-left: 0.5rem !important; /* Adicionar margin-left para alinhamento */
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+  }
+}
