@@ -416,11 +416,21 @@ function calculateVolumetric() {
 
   function setTheme(theme) {
     document.documentElement.classList.remove(DARK_CLASS, LIGHT_CLASS);
+
     if (theme === "dark") {
       document.documentElement.classList.add(DARK_CLASS);
+      // Trocar classes Bulma em todos os elementos
+      document.querySelectorAll(".is-light").forEach((el) => {
+        el.classList.replace("is-light", "is-dark");
+      });
     } else {
       document.documentElement.classList.add(LIGHT_CLASS);
+      // Trocar classes Bulma em todos os elementos
+      document.querySelectorAll(".is-dark").forEach((el) => {
+        el.classList.replace("is-dark", "is-light");
+      });
     }
+
     localStorage.setItem(THEME_KEY, theme);
   }
 

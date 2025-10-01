@@ -100,6 +100,22 @@
   border-color: var(--color-dark-border) !important;
 }
 
+/* Correções específicas para notifications no tema escuro */
+.dark-theme .notification.is-info.is-dark {
+  background-color: var(--color-dark-navbar) !important;
+  color: var(--color-dark-main) !important;
+}
+
+.dark-theme .notification.is-warning.is-dark {
+  background-color: var(--color-dark-navbar) !important;
+  color: var(--color-dark-main) !important;
+}
+
+.dark-theme .notification.is-primary.is-dark {
+  background-color: var(--color-dark-navbar) !important;
+  color: var(--color-dark-main) !important;
+}
+
 .light-theme {
   background: var(--color-light-bg) !important;
   color: var(--color-light-main) !important;
@@ -114,6 +130,22 @@
 .light-theme .navbar-item {
   background: var(--color-light-navbar);
   border-radius: var(--border-radius);
+}
+
+/* Correções específicas para notifications no tema claro */
+.light-theme .notification.is-info.is-light {
+  background-color: var(--color-light-navbar) !important;
+  color: var(--color-light-main) !important;
+}
+
+.light-theme .notification.is-warning.is-light {
+  background-color: var(--color-light-navbar) !important;
+  color: var(--color-light-main) !important;
+}
+
+.light-theme .notification.is-primary.is-light {
+  background-color: var(--color-light-navbar) !important;
+  color: var(--color-light-main) !important;
 }
 
 /* ========================================
@@ -138,6 +170,39 @@
   background: var(--color-light-accent) !important;
   border-color: var(--color-light-accent) !important;
   color: var(--color-white) !important;
+}
+
+/* ========================================
+   CENTRALIZAÇÃO DE MENSAGENS
+   ======================================== */
+
+/* Centraliza divs de resultado e mensagens em todas as páginas */
+#result,
+#explanation,
+#alertMessage,
+#suggestionMessage {
+  text-align: center !important;
+}
+
+/* Estilos específicos para diferentes tipos de mensagem */
+#result {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+#explanation {
+  font-size: 1em;
+  margin-top: 0.5rem;
+}
+
+#alertMessage {
+  margin-top: 1rem;
+}
+
+#suggestionMessage {
+  margin-top: 0.5rem;
+  font-size: 1.1em;
 }
 
 /* ========================================
