@@ -442,6 +442,22 @@ function calculateVolumetric() {
     const next = current === "dark" ? "light" : "dark";
 
     setTheme(next);
+
+    // Atualiza visual do botão de alternância
+    const btn = document.getElementById("theme-toggle");
+
+    if (btn) {
+      btn.className = `button ${
+        next === "light" ? "is-light" : "is-dark"
+      } navbar-item is-rounded`;
+
+      const icon = btn.querySelector("i");
+
+      if (icon) {
+        icon.classList.remove("fa-sun", "fa-moon");
+        icon.classList.add(next === "light" ? "fa-sun" : "fa-moon");
+      }
+    }
   }
 
   // Adiciona botão de alternância ao menu
