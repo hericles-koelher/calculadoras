@@ -460,32 +460,82 @@ function calculateVolumetric() {
     }
   }
 
+  // Adiciona estrutura navbar-brand com hamburger burger
+  function injectNavbarBurger() {
+    const navbar = document.querySelector(".navbar");
+
+    if (!navbar || document.querySelector(".navbar-brand")) return;
+
+    const navbarBrand = document.createElement("div");
+    navbarBrand.className = "navbar-brand";
+
+    const burgerBtn = document.createElement("a");
+    burgerBtn.setAttribute("role", "button");
+    burgerBtn.className = "navbar-burger";
+    burgerBtn.setAttribute("aria-label", "menu");
+    burgerBtn.setAttribute("aria-expanded", "false");
+    burgerBtn.setAttribute("data-target", "navbarBasic");
+
+    // Adiciona as 3 linhas do hamburger
+    for (let i = 0; i < 3; i++) {
+      const span = document.createElement("span");
+      span.setAttribute("aria-hidden", "true");
+      burgerBtn.appendChild(span);
+    }
+
+    // Adiciona evento de toggle
+    burgerBtn.addEventListener("click", function () {
+      const target = document.getElementById("navbarBasic");
+
+      // Toggle aria-expanded
+      const isExpanded = burgerBtn.getAttribute("aria-expanded") === "true";
+      burgerBtn.setAttribute("aria-expanded", !isExpanded);
+
+      // Toggle classes
+      burgerBtn.classList.toggle("is-active");
+      if (target) {
+        target.classList.toggle("is-active");
+      }
+    });
+
+    navbarBrand.appendChild(burgerBtn);
+    navbar.insertBefore(navbarBrand, navbar.firstChild);
+  }
+
   // Adiciona botão de alternância ao menu
   function injectThemeToggle() {
-    const nav = document.querySelector(".navbar-menu");
+    const navbar = document.querySelector(".navbar");
 
-    if (!nav || document.getElementById("theme-toggle")) return;
+    if (!navbar || document.getElementById("theme-toggle")) return;
 
-    const endDiv = document.createElement("div");
-    endDiv.className = "navbar-end";
+    // Cria um container específico para o botão de tema que fica fora do menu colapsável
+    const themeContainer = document.createElement("div");
+    themeContainer.className = "navbar-end";
+    themeContainer.style.position = "absolute";
+    themeContainer.style.right = "1.5rem";
+    themeContainer.style.top = "0.5rem";
+    themeContainer.style.zIndex = "40";
 
-    const isThemeLight = getSavedTheme() === LIGHT_CLASS;
+    const currentTheme = getSavedTheme() || getSystemTheme();
+    const isThemeLight = currentTheme === "light";
 
     const btn = document.createElement("button");
     btn.className = `button ${
       isThemeLight ? "is-light" : "is-dark"
     } navbar-item is-rounded`;
     btn.id = "theme-toggle";
-    btn.innerHTML = '<span class="icon"><i class="fas fa-sun"></i></span>';
+    btn.innerHTML = `<span class="icon"><i class="fas ${
+      isThemeLight ? "fa-sun" : "fa-moon"
+    }"></i></span>`;
     btn.onclick = toggleTheme;
 
-    endDiv.appendChild(btn);
-
-    nav.appendChild(endDiv);
+    themeContainer.appendChild(btn);
+    navbar.appendChild(themeContainer);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     syncTheme();
+    injectNavbarBurger();
     injectThemeToggle();
   });
 })();

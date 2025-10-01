@@ -80,6 +80,7 @@
   position: absolute;
   right: 1.5rem;
   top: 0.5rem;
+  z-index: 30;
 }
 .dark-theme .button.is-fullwidth {
   background: var(--color-dark-accent);
@@ -140,4 +141,267 @@
 .dark-theme .box,
 .dark-theme .notification {
   border-color: var(--color-dark-border) !important;
+}
+
+/* ========================================
+   RESPONSIVO - MENU HAMBURGER
+   ======================================== */
+
+/* Navbar burger - hidden by default */
+.navbar-burger {
+  display: none;
+  cursor: pointer;
+  height: 3.25rem;
+  position: relative;
+  width: 3.25rem;
+  margin-left: 1rem;
+  margin-right: auto;
+}
+
+/* Navbar burger spans (hamburger lines) */
+.navbar-burger span {
+  background-color: currentColor;
+  display: block;
+  height: 1px;
+  left: calc(50% - 8px);
+  position: absolute;
+  transform-origin: center;
+  transition-duration: 86ms;
+  transition-property: background-color, opacity, transform;
+  transition-timing-function: ease-out;
+  width: 16px;
+}
+
+.navbar-burger span:nth-child(1) {
+  top: calc(50% - 6px);
+}
+
+.navbar-burger span:nth-child(2) {
+  top: calc(50% - 1px);
+}
+
+.navbar-burger span:nth-child(3) {
+  top: calc(50% + 4px);
+}
+
+/* Active burger animation (X shape) */
+.navbar-burger.is-active span:nth-child(1) {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.navbar-burger.is-active span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-burger.is-active span:nth-child(3) {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+/* Tema escuro para o burger */
+.dark-theme .navbar-burger span {
+  background-color: var(--color-dark-main);
+}
+
+.dark-theme .navbar-burger:hover span {
+  background-color: var(--color-dark-accent);
+}
+
+/* Tema claro para o burger */
+.light-theme .navbar-burger span {
+  background-color: var(--color-light-main);
+}
+
+.light-theme .navbar-burger:hover span {
+  background-color: var(--color-light-accent);
+}
+
+/* ========================================
+   BREAKPOINTS RESPONSIVOS
+   ======================================== */
+
+/* Desktop (≥1024px) - Comportamento padrão */
+@media screen and (min-width: 1024px) {
+  .navbar-burger {
+    display: none !important;
+  }
+
+  .navbar-menu {
+    display: flex !important;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .navbar-start {
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-end {
+    position: absolute;
+    right: 1.5rem;
+    top: 0.5rem;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Tablet e Mobile (<1024px) - Menu hamburger */
+@media screen and (max-width: 1023px) {
+  .navbar-burger {
+    display: block !important;
+  }
+
+  /* Navbar menu hidden por padrão */
+  .navbar-menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background-color: inherit;
+    box-shadow: 0 8px 16px rgba(10, 10, 10, 0.1);
+    padding: 0.5rem 0;
+    transition: all 0.3s ease-in-out;
+    transform: translateY(-10px);
+    opacity: 0;
+    z-index: 20;
+  }
+
+  /* Navbar menu ativo */
+  .navbar-menu.is-active {
+    display: block !important;
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Navbar start em coluna */
+  .navbar-start {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+
+  /* Items do menu em mobile */
+  .navbar-item {
+    display: block;
+    line-height: 1.5;
+    padding: 0.75rem 1rem;
+    position: relative;
+    margin: 0.25rem 0;
+    border-radius: 6px !important;
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Navbar end sempre visível no canto direito */
+  .navbar-end {
+    position: fixed !important;
+    right: 1.5rem !important;
+    top: 0.15rem !important;
+    display: flex !important;
+    align-items: center;
+    z-index: 40;
+  }
+
+  /* Garantir que o toggle de tema seja sempre visível */
+  #theme-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Estilos específicos para tema escuro em mobile */
+  .dark-theme .navbar-menu {
+    background-color: var(--color-dark-navbar);
+    border-top: 1px solid var(--color-dark-border);
+  }
+
+  .dark-theme .navbar-item {
+    color: var(--color-dark-main);
+    background-color: transparent;
+  }
+
+  .dark-theme .navbar-item:hover {
+    background-color: var(--color-dark-bg) !important;
+  }
+
+  .dark-theme .navbar-item.is-active {
+    background-color: var(--color-dark-accent) !important;
+    color: #fff !important;
+  }
+
+  /* Estilos específicos para tema claro em mobile */
+  .light-theme .navbar-menu {
+    background-color: var(--color-light-navbar);
+    border-top: 1px solid #dbdbdb;
+  }
+
+  .light-theme .navbar-item {
+    color: var(--color-light-main);
+    background-color: transparent;
+  }
+
+  .light-theme .navbar-item:hover {
+    background-color: var(--color-light-bg) !important;
+  }
+
+  .light-theme .navbar-item.is-active {
+    background-color: var(--color-light-accent) !important;
+    color: #fff !important;
+  }
+}
+
+/* ========================================
+   TRANSIÇÕES SUAVES
+   ======================================== */
+
+/* Transições para todos os elementos do navbar */
+.navbar,
+.navbar-menu,
+.navbar-item,
+.navbar-burger {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Transição específica para o menu mobile */
+.navbar-menu {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Hover effect suave para o burger */
+.navbar-burger:hover {
+  transform: scale(1.05);
+}
+
+/* Animação de entrada para os items do menu */
+@keyframes slideInDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.navbar-menu.is-active .navbar-item {
+  animation: slideInDown 0.3s ease-out;
+  animation-fill-mode: both;
+}
+
+.navbar-menu.is-active .navbar-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.navbar-menu.is-active .navbar-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.navbar-menu.is-active .navbar-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.navbar-menu.is-active .navbar-item:nth-child(4) {
+  animation-delay: 0.4s;
 }
